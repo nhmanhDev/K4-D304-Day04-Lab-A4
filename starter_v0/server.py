@@ -16,7 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from chat import now_iso, run_model_tool_loop, safe_slug, write_transcript
+from chat import now_iso, run_model_tool_loop, safe_slug, trim_history, write_transcript
 from providers import make_provider
 from tools import load_tool_declarations, to_openai_tools
 from versioning import artifact_version_dict, build_artifact_version
@@ -58,6 +58,7 @@ class ChatRequest(BaseModel):
     model: str | None = None
     history: list[ChatTurn] = []
     session_id: str | None = None
+    history_window: int = 5
 
 
 class ChatResponse(BaseModel):
@@ -101,9 +102,10 @@ def chat(req: ChatRequest) -> ChatResponse:
     selected_model = req.model or getattr(provider, "default_model", None)
     artifact_version = build_artifact_version(req.version, system_prompt_path, tools_path)
 
+    trimmed_history = trim_history(req.history, req.history_window)
     messages = [
         {"role": "system", "content": system_prompt},
-        *[{"role": turn.role, "content": turn.content} for turn in req.history],
+        *[{"role": turn.role, "content": turn.content} for turn in trimmed_history],
         {"role": "user", "content": req.message},
     ]
 
