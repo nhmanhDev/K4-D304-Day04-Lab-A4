@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
 import { sendChat } from './api'
 import { toolStatus, type ChatMessage, type RoundRecord, type ToolEvent } from './types'
 import './App.css'
@@ -23,6 +23,84 @@ function useTheme(): [Theme, () => void] {
   }, [theme])
 
   return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))]
+}
+
+const QUICK_CHIPS = [
+  'Tin tức AI hôm nay',
+  'Tweet của Sam Altman',
+  'Tìm paper về LLM trên arXiv',
+  'LLM là gì?',
+  'Thời tiết Hà Nội',
+  'Digest tin AI tuần này',
+]
+
+const AVAILABLE_TOOLS: { name: string; hint: string }[] = [
+  { name: 'lookup', hint: 'tìm tin tức/web' },
+  { name: 'fetch', hint: 'đọc 1 URL' },
+  { name: 'timeline', hint: 'tweet của 1 người' },
+  { name: 'social_search', hint: 'tìm tweet theo chủ đề' },
+  { name: 'wikipedia', hint: 'định nghĩa nhanh' },
+  { name: 'weather', hint: 'thời tiết' },
+  { name: 'papers', hint: 'tìm paper arXiv' },
+  { name: 'paper_text', hint: 'đọc PDF arXiv' },
+  { name: 'format', hint: 'trình bày digest' },
+  { name: 'save_digest', hint: 'lưu digest ra file' },
+  { name: 'send', hint: 'gửi Telegram' },
+]
+
+function PlusIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M7 2V12M2 7H12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  )
+}
+
+function SendIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+      <path d="M12.5 1.5L6.5 7.5M12.5 1.5L8.5 12.5L6.5 7.5L1.5 5.5L12.5 1.5Z" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function ThemeIcon({ theme }: { theme: Theme }) {
+  if (theme === 'dark') {
+    return (
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <circle cx="6.5" cy="6.5" r="3" stroke="currentColor" strokeWidth="1.3" />
+        <path
+          d="M6.5 1V2M6.5 11V12M1 6.5H2M11 6.5H12M2.8 2.8L3.5 3.5M9.5 9.5L10.2 10.2M2.8 10.2L3.5 9.5M9.5 3.5L10.2 2.8"
+          stroke="currentColor"
+          strokeWidth="1.3"
+          strokeLinecap="round"
+        />
+      </svg>
+    )
+  }
+  return (
+    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+      <path
+        d="M11 7.5C10.3 9.6 8.1 11 5.7 10.7C3.3 10.4 1.5 8.3 1.5 6C1.5 3.7 3 1.8 5.1 1.2C3.8 3.2 4.1 5.9 5.9 7.5C7.7 9.1 10.1 9.1 11 7.5Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
+}
+
+function AgentAvatar() {
+  return (
+    <div className="hero-avatar">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+        <circle cx="13" cy="13" r="5" stroke="#10b981" strokeWidth="1.8" />
+        <circle cx="13" cy="13" r="2" fill="#10b981" />
+        <path d="M13 3A10 10 0 0 1 23 13" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 3" />
+        <path d="M13 23A10 10 0 0 1 3 13" stroke="#10b981" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="2 3" />
+      </svg>
+    </div>
+  )
 }
 
 function JsonBlock({ data }: { data: unknown }) {
@@ -83,50 +161,29 @@ function RoundBlock({ round }: { round: RoundRecord }) {
   )
 }
 
-function EmptyState() {
+function Composer({
+  value,
+  onChange,
+  onSend,
+  onKeyDown,
+  placeholder,
+}: {
+  value: string
+  onChange: (v: string) => void
+  onSend: () => void
+  onKeyDown: (e: KeyboardEvent<HTMLTextAreaElement>) => void
+  placeholder: string
+}) {
+  const active = value.trim().length > 0
   return (
-    <div className="empty-state">
-      <div className="empty-state-icon">
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-          <path
-            d="M9 3.5C5.96 3.5 3.5 5.96 3.5 9C3.5 12.04 5.96 14.5 9 14.5C12.04 14.5 14.5 12.04 14.5 9"
-            stroke="currentColor"
-            strokeWidth="1.4"
-            strokeLinecap="round"
-          />
-          <path d="M12 3L14.5 5.5L12 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-          <circle cx="9" cy="9" r="1.2" fill="currentColor" />
-        </svg>
+    <div className="composer-card">
+      <textarea value={value} onChange={(e) => onChange(e.target.value)} onKeyDown={onKeyDown} placeholder={placeholder} rows={2} />
+      <div className="composer-card-actions">
+        <button className={`composer-send ${active ? 'active' : ''}`} onClick={onSend} disabled={!active}>
+          Gửi <SendIcon />
+        </button>
       </div>
-      <p>Nhập một research request để bắt đầu.</p>
-      <p className="hint">Thay đổi Version ở trên để so sánh kết quả giữa các phiên bản agent.</p>
     </div>
-  )
-}
-
-function ThemeIcon({ theme }: { theme: Theme }) {
-  if (theme === 'dark') {
-    return (
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-        <circle cx="6.5" cy="6.5" r="3" stroke="currentColor" strokeWidth="1.3" />
-        <path
-          d="M6.5 1V2M6.5 11V12M1 6.5H2M11 6.5H12M2.8 2.8L3.5 3.5M9.5 9.5L10.2 10.2M2.8 10.2L3.5 9.5M9.5 3.5L10.2 2.8"
-          stroke="currentColor"
-          strokeWidth="1.3"
-          strokeLinecap="round"
-        />
-      </svg>
-    )
-  }
-  return (
-    <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
-      <path
-        d="M11 7.5C10.3 9.6 8.1 11 5.7 10.7C3.3 10.4 1.5 8.3 1.5 6C1.5 3.7 3 1.8 5.1 1.2C3.8 3.2 4.1 5.9 5.9 7.5C7.7 9.1 10.1 9.1 11 7.5Z"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-      />
-    </svg>
   )
 }
 
@@ -139,14 +196,19 @@ export default function App() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
   const selected = useMemo(
     () => messages.find((m) => m.id === selectedId && m.role === 'assistant'),
     [messages, selectedId],
   ) as Extract<ChatMessage, { role: 'assistant' }> | undefined
 
-  async function handleSend() {
-    const text = input.trim()
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages])
+
+  async function handleSend(overrideText?: string) {
+    const text = (overrideText ?? input).trim()
     if (!text || loading) return
     const userMsg: ChatMessage = { id: uid(), role: 'user', content: text }
     setMessages((prev) => [...prev, userMsg])
@@ -174,7 +236,7 @@ export default function App() {
     }
   }
 
-  function handleComposerKey(e: React.KeyboardEvent<HTMLTextAreaElement>) {
+  function handleComposerKey(e: KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSend()
@@ -185,125 +247,168 @@ export default function App() {
     setMessages([])
     setSessionId(null)
     setSelectedId(null)
+    setInput('')
   }
 
   return (
-    <div className="app">
-      <header className="topbar">
-        <h1>Research Agent — Demo UI</h1>
-        <div className="topbar-controls">
-          <label>
-            <span>Version</span>
-            <input
-              list="version-options"
-              value={version}
-              onChange={(e) => setVersion(e.target.value)}
-              placeholder="v0"
-              className="version-input"
-            />
-            <datalist id="version-options">
-              <option value="v0" />
-              <option value="v1" />
-              <option value="v2" />
-              <option value="v3" />
-            </datalist>
-          </label>
-          <span className="session-id">session: {sessionId ?? '(new)'}</span>
-          <button onClick={handleNewSession} className="secondary">
+    <div className="app-shell">
+      {/* ── Sidebar ── */}
+      <aside className="sidebar">
+        <div className="sidebar-logo">
+          <div className="sidebar-logo-icon">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <circle cx="7" cy="7" r="3" stroke="white" strokeWidth="1.5" />
+              <path d="M7 1.5A5.5 5.5 0 0 1 12.5 7" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+              <circle cx="7" cy="7" r="1.2" fill="white" />
+            </svg>
+          </div>
+          <span>Research Agent</span>
+        </div>
+
+        <div className="sidebar-newchat">
+          <button className="btn-newchat" onClick={handleNewSession}>
+            <PlusIcon />
             New session
           </button>
-          <button
-            className="icon-btn"
-            onClick={toggleTheme}
-            title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-            aria-label="Toggle theme"
-          >
-            <ThemeIcon theme={theme} />
-          </button>
         </div>
-      </header>
 
-      <main className="layout">
-        <section className="chat-panel">
-          <div className="messages">
-            {messages.length === 0 && <EmptyState />}
-            {messages.map((m) => (
-              <div
-                key={m.id}
-                className={`message message-${m.role} ${m.role === 'assistant' && selectedId === m.id ? 'selected' : ''}`}
-              >
-                {m.role === 'user' && <div className="bubble bubble-user">{m.content}</div>}
-                {m.role === 'assistant' && (
-                  <button
-                    className="bubble bubble-assistant"
-                    onClick={() => setSelectedId(m.id === selectedId ? null : m.id)}
-                  >
-                    <div className="bubble-meta">
-                      <span className="tag">{m.artifactVersion}</span>
-                      <span className="tag tag-status">{m.status}</span>
-                    </div>
-                    {m.content}
-                  </button>
-                )}
-                {m.role === 'error' && (
-                  <div className="bubble bubble-error">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                      <path d="M7 1L13 12H1L7 1Z" stroke="#dc2626" strokeWidth="1.4" strokeLinejoin="round" />
-                      <path d="M7 5.5V8" stroke="#dc2626" strokeWidth="1.4" strokeLinecap="round" />
-                      <circle cx="7" cy="10" r="0.7" fill="#dc2626" />
-                    </svg>
-                    <p>{m.content}</p>
-                  </div>
-                )}
-              </div>
-            ))}
-            {loading && <p className="muted">Agent đang xử lý…</p>}
-          </div>
-          <div className="composer">
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleComposerKey}
-              placeholder="Nhập request..."
-              rows={2}
-            />
-            <button onClick={handleSend} disabled={loading || !input.trim()}>
-              Gửi
+        <div className="sidebar-body">
+          <p className="sidebar-section-title">Tools ({AVAILABLE_TOOLS.length})</p>
+          {AVAILABLE_TOOLS.map((t) => (
+            <div key={t.name} className="sidebar-tool-item">
+              <code>{t.name}</code>
+              <span>{t.hint}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="sidebar-footer">Day 04 Lab v2 · Research Agent</div>
+      </aside>
+
+      {/* ── Main ── */}
+      <div className="main">
+        <header className="topbar">
+          <span className="topbar-title">Research Agent — Demo UI</span>
+          <div className="topbar-controls">
+            <label>
+              <span>Version</span>
+              <input
+                list="version-options"
+                value={version}
+                onChange={(e) => setVersion(e.target.value)}
+                placeholder="v0"
+                className="version-input"
+              />
+              <datalist id="version-options">
+                <option value="v0" />
+                <option value="v1" />
+                <option value="v2" />
+                <option value="v3" />
+              </datalist>
+            </label>
+            <span className="session-id">session: {sessionId ?? '(new)'}</span>
+            <div className="topbar-divider" />
+            <button className="icon-btn" onClick={toggleTheme} title={theme === 'dark' ? 'Light mode' : 'Dark mode'} aria-label="Toggle theme">
+              <ThemeIcon theme={theme} />
             </button>
           </div>
-        </section>
+        </header>
 
-        <aside className="trace-panel">
-          <div className="trace-header">
-            <span>Tool trace</span>
-          </div>
-          {!selected && (
-            <div className="trace-empty">
-              <p>Chọn 1 tin nhắn của agent để xem tool trace của lượt đó.</p>
-            </div>
-          )}
-          {selected && (
-            <div className="trace-body">
-              <div className="trace-meta">
-                <div className="trace-meta-item">
-                  <span className="label">artifact_version</span>
-                  <span className="tag">{selected.artifactVersion}</span>
+        <div className="content">
+          <div className="chat-col">
+            {messages.length === 0 ? (
+              <div className="hero">
+                <AgentAvatar />
+                <h1>
+                  Chào, tôi là <span>Research Agent</span>. Tôi giúp gì được cho bạn?
+                </h1>
+                <p className="subtitle">Tìm tin tức, tra cứu kiến thức, đọc bài báo, theo dõi mạng xã hội — hỏi trực tiếp hoặc bấm gợi ý bên dưới.</p>
+                <div className="chips">
+                  {QUICK_CHIPS.map((chip) => (
+                    <button key={chip} className="chip" onClick={() => handleSend(chip)}>
+                      {chip}
+                    </button>
+                  ))}
                 </div>
-                <div className="trace-meta-item">
-                  <span className="label">status</span>
-                  <span className="tag tag-status">{selected.status}</span>
-                </div>
+                <Composer value={input} onChange={setInput} onSend={() => handleSend()} onKeyDown={handleComposerKey} placeholder="Nhập request..." />
               </div>
-              {selected.rounds.length === 0 && <p className="muted">Không có tool call ở lượt này.</p>}
-              <div className="rounds">
-                {selected.rounds.map((round) => (
-                  <RoundBlock key={round.round} round={round} />
+            ) : (
+              <div className="messages">
+                {messages.map((m) => (
+                  <div
+                    key={m.id}
+                    className={`message message-${m.role} ${m.role === 'assistant' && selectedId === m.id ? 'selected' : ''}`}
+                  >
+                    {m.role === 'user' && <div className="bubble bubble-user">{m.content}</div>}
+                    {m.role === 'assistant' && (
+                      <button
+                        className="bubble bubble-assistant"
+                        onClick={() => setSelectedId(m.id === selectedId ? null : m.id)}
+                      >
+                        <div className="bubble-meta">
+                          <span className="tag">{m.artifactVersion}</span>
+                          <span className="tag tag-status">{m.status}</span>
+                        </div>
+                        {m.content}
+                      </button>
+                    )}
+                    {m.role === 'error' && (
+                      <div className="bubble bubble-error">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                          <path d="M7 1L13 12H1L7 1Z" stroke="#dc2626" strokeWidth="1.4" strokeLinejoin="round" />
+                          <path d="M7 5.5V8" stroke="#dc2626" strokeWidth="1.4" strokeLinecap="round" />
+                          <circle cx="7" cy="10" r="0.7" fill="#dc2626" />
+                        </svg>
+                        <p>{m.content}</p>
+                      </div>
+                    )}
+                  </div>
                 ))}
+                {loading && <p className="muted">Agent đang xử lý…</p>}
+                <div ref={messagesEndRef} />
               </div>
+            )}
+
+            {messages.length > 0 && (
+              <div className="composer-bar">
+                <Composer value={input} onChange={setInput} onSend={() => handleSend()} onKeyDown={handleComposerKey} placeholder="Nhập request..." />
+              </div>
+            )}
+          </div>
+
+          {/* ── Tool trace panel ── */}
+          <aside className="trace-panel">
+            <div className="trace-header">
+              <span>Tool trace</span>
             </div>
-          )}
-        </aside>
-      </main>
+            {!selected && (
+              <div className="trace-empty">
+                <p>Chọn 1 tin nhắn của agent để xem tool trace của lượt đó.</p>
+              </div>
+            )}
+            {selected && (
+              <div className="trace-body">
+                <div className="trace-meta">
+                  <div className="trace-meta-item">
+                    <span className="label">artifact_version</span>
+                    <span className="tag">{selected.artifactVersion}</span>
+                  </div>
+                  <div className="trace-meta-item">
+                    <span className="label">status</span>
+                    <span className="tag tag-status">{selected.status}</span>
+                  </div>
+                </div>
+                {selected.rounds.length === 0 && <p className="muted">Không có tool call ở lượt này.</p>}
+                <div className="rounds">
+                  {selected.rounds.map((round) => (
+                    <RoundBlock key={round.round} round={round} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </aside>
+        </div>
+      </div>
     </div>
   )
 }
