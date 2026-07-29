@@ -6,5 +6,6 @@ __pycache__/
 .env.*
 !.env.example
 arxiv_papers/
+digests/
 ui/node_modules/
 ui/dist/

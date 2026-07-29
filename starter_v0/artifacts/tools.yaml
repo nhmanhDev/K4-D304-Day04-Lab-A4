@@ -145,3 +145,41 @@ tools:
         max_pages: {type: integer, default: 5, description: "Số trang"}
         max_chars: {type: integer, default: 8000, description: "Số ký tự"}
       required: [arxiv_url]
+
+  # ---------------- Team tools (mới) ----------------
+  - name: wikipedia
+    description: |
+      Tra cứu định nghĩa/kiến thức nền nhanh cho một chủ đề, khái niệm, hoặc thực thể cụ thể (người, tổ chức, công nghệ...) qua Wikipedia.
+      Dùng khi user hỏi "X là gì", "giải thích về X", cần định nghĩa/background nhanh.
+      KHÔNG dùng cho tin tức/sự kiện gần đây (dùng lookup) hoặc khi user đã cho URL cụ thể (dùng fetch).
+    parameters:
+      type: object
+      properties:
+        query: {type: string, default: "", description: "Chủ đề/thực thể cần tra"}
+        lang: {type: string, default: "vi", description: "Mã ngôn ngữ Wikipedia, ví dụ vi, en"}
+      required: [query]
+
+  - name: weather
+    description: |
+      Lấy thời tiết hiện tại (nhiệt độ, tình trạng, gió) cho một địa điểm.
+      CHỈ dùng khi user hỏi rõ về thời tiết/nhiệt độ/khí hậu của một nơi.
+      KHÔNG dùng cho câu hỏi chung chung về "tình hình ở X" (dùng lookup).
+    parameters:
+      type: object
+      properties:
+        location: {type: string, default: "", description: "Tên địa điểm, ví dụ Hà Nội"}
+        unit: {type: string, enum: [celsius, fahrenheit], default: "celsius", description: "Đơn vị nhiệt độ"}
+      required: [location]
+
+  - name: save_digest
+    description: |
+      Lưu một digest markdown (thường là kết quả của format) ra file cục bộ trên máy chạy agent. Không gửi đi đâu, chỉ ghi file local.
+      BOUNDARY QUAN TRỌNG: giống send — BẮT BUỘC gọi clarify(response_type="yes_no") để xác nhận với user trước khi gọi với confirmed=true.
+      KHÔNG tự lưu mà không có xác nhận rõ ràng.
+    parameters:
+      type: object
+      properties:
+        markdown: {type: string, default: "", description: "Nội dung markdown cần lưu"}
+        filename: {type: string, default: "", description: "Tên file (không cần đuôi .md)"}
+        confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
+      required: [markdown]

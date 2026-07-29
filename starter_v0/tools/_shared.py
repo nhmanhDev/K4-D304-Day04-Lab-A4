@@ -22,6 +22,11 @@ def domain(url: str) -> str:
         return ""
 
 
+def safe_slug(value: str) -> str:
+    slug = re.sub(r"[^A-Za-z0-9_.-]+", "_", value.strip())
+    return slug.strip("_") or "file"
+
+
 def fold_text(text: str) -> str:
     decomposed = unicodedata.normalize("NFD", text.lower())
     return "".join(ch for ch in decomposed if unicodedata.category(ch) != "Mn")
