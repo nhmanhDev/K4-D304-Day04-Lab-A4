@@ -123,7 +123,11 @@ tools:
       required: [query]
 
   - name: papers
-    description: "Tìm bài báo khoa học."
+    description: |
+      Tìm bài báo khoa học trên arXiv.
+      Dùng khi user muốn tìm paper/nghiên cứu học thuật, không phải tin tức thường (dùng lookup cho tin tức).
+      QUAN TRỌNG về args:
+      - query: giữ nguyên đúng từ khóa/thuật ngữ user đưa ra (ví dụ "LLM"). KHÔNG tự diễn giải hoặc mở rộng thành cụm dài hơn (ví dụ KHÔNG đổi "LLM" thành "large language models LLM").
     parameters:
       type: object
       properties:

@@ -1,0 +1,645 @@
+{
+  "run_id": "v3_B_group_openrouter_20260729T160715792557",
+  "version": "v3",
+  "artifact_version": "v3+p4bfeeef606fd+ta6632772dd27",
+  "prompt_hash": "4bfeeef606fd570d2d8d2e544b8ccd3f13dd241827e87e671651545a25cf4389",
+  "tools_hash": "a6632772dd275134c8a8c4de16402f027c1a18bd387922a73dd65577cc3098ad",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "generated_at": "2026-07-29T16:07:15",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_single_wrong_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có chọn đúng tool 'papers' cho truy vấn học thuật về LLM thay vì lookup web thông thường không."
+      },
+      "input": "Tìm kiếm trên arXiv các nghiên cứu mới nhất về mô hình ngôn ngữ lớn LLM.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM",
+              "max_results": 5,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "LLM",
+            "max_results": 5,
+            "sort_by": "lastUpdatedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "error": "ReadTimeout",
+            "message": "HTTPSConnectionPool(host='export.arxiv.org', port=443): Read timed out. (read timeout=30)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_single_wrong_arg_value",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng search_type='Top' cho các tweet 'nổi bật nhất/phổ biến nhất' không."
+      },
+      "input": "Tìm các tweet nổi bật nhất (phổ biến nhất) về chủ đề AI agent.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI agent",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=AI+agent&search_type=Top"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_single_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có gọi clarify khi thiếu thông tin bắt buộc (screenname) của timeline thay vì tự đoán không."
+      },
+      "input": "Lấy các bài đăng mới nhất từ tài khoản Twitter hộ tôi.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_single_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có từ chối câu hỏi sáng tác thơ lục bát nằm ngoài phạm vi tìm kiếm thông tin/research không."
+      },
+      "input": "Viết giùm tôi một bài thơ lục bát về tình yêu quê hương đất nước.",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Xin lỗi, nhưng tôi không thể giúp bạn viết thơ. Tuy nhiên, tôi có thể cung cấp thông tin hoặc tài liệu liên quan đến tình yêu quê hương đất nước nếu bạn cần.",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_single_wrong_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có yêu cầu xác nhận yes/no trước khi thực hiện hành động ghi (send) dữ liệu nhạy cảm không."
+      },
+      "input": "Gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_wrong_arg_value",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng carryover screenname 'karpathy' và cập nhật limit từ 20 thành 5 ở lượt cuối."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 20 tweet mới nhất từ tài khoản của Andrej Karpathy."
+        },
+        {
+          "role": "user",
+          "content": "À, giảm số lượng xuống còn 5 tweet thôi nhé."
+        },
+        {
+          "role": "user",
+          "content": "Vẫn lấy của Karpathy."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=karpathy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_wrong_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng chuyển đổi công cụ từ social_search sang lookup trên web khi user yêu cầu đổi nguồn thông tin."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về Quantum Computing trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Đừng tìm trên Twitter nữa, hãy tìm tin tức chính thống trên báo mạng hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Chủ đề vẫn là Quantum Computing."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Quantum Computing",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Quantum Computing",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Quantum Computing",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Quantum Computing",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Here’s what Anthropic found when it turned Mythos loose on encryption algorithms - CyberScoop",
+                "url": "https://cyberscoop.com/anthropic-claude-mythos-encryption-flaws-hawk-aes-pqc/",
+                "source": "cyberscoop.com",
+                "summary": "Claude Mythos exposed mathematical weaknesses in a post-quantum candidate and a simplified version of AES, marking a major breakthrough for AI-driven cryptanalysis. Anthropic researchers used Claude Mythos Preview to find new weaknesses in two cryptographic methods, the company said Tuesday, including one that is being considered by the National Institute of Standards and Technology for both traditional and quantum computing. “The attacks described in these two papers are the strongest attacks we have found to date,” the company wrote in the post. One of the weaknesses found was in HAWK, a digital signature scheme under review by the NIST as part of a search for encryption methods that could survive attacks from quantum computers. The other flaw was found in a weakened version of the Advanced Encryption Standard, or AES, the cipher NIST adopted in 2001 and the most widely used method for scrambling data in transit.",
+                "score": 0.31431407
+              },
+              {
+                "title": "Chicago Quantum Tech Hub Lands Grant for New Supplier Facility - Manufacturing.net",
+                "url": "https://www.manufacturing.net/software/news/22971348/chicago-quantum-tech-hub-lands-grant-for-new-supplier-facility",
+                "source": "manufacturing.net",
+                "summary": "The initiative is backed by the state's $500 million investment the Illinois Quantum and Microelectronics Park (IQMP), a planned 128-acre public-private campus on the site of the former U.S. Steel South Works plant on Chicago's Southeast Side. The U.S. Economic Development Administration (EDA) announced that it will award $30 million to The Bloch Quantum Tech Hub in Chicago, a project that looks to scale U.S. production of quantum materials, components and subsystems. Led by the Chicago Quantum Exchange (CQE), The Bloch is part of Illinois' effort to strengthen its critical technology sectors. The CQE said funding from the EDA and the State of Illinois will support construction of the FaQtory, an IQMP supplier facility designed to house quantum suppliers and components manufacturers. The State of Illinois, through the Department of Commerce and Economic Opportunity’s Federal Grant Support Program, has committed $2 million to help support, scale and align all of The Bloch’s projects and investment opportunities by connecting available joint resources and personnel.",
+                "score": 0.10247544
+              },
+              {
+                "title": "Microsoft’s $60 Million Genesis Mission Commitment Puts Nuclear AI at the Center - POWER Magazine",
+                "url": "https://www.powermag.com/microsofts-60-million-genesis-mission-commitment-puts-nuclear-ai-at-the-center/",
+                "source": "powermag.com",
+                "summary": "##### Sign In. Home Nuclear Microsoft’s $60 Million Genesis Mission Commitment Puts Nuclear AI at the Center. # Microsoft’s $60 Million Genesis Mission Commitment Puts Nuclear AI at the Center. Last week, Microsoft announced a $60 million, multiyear commitment to the Department of Energy’s (DOE’s) Genesis Mission, the national initiative to embed artificial intelligence (AI) across the country’s 17 national laboratories. The company’s stated goal, echoing DOE’s own framing, is to help “double the productivity and impact of American research and innovation within a decade.” Two nuclear energy projects anchor the announcement: a research reactor at Purdue University that Idaho National Laboratory (INL) helped adjust remotely and autonomously using distributed cloud computing, and an AI tool built to speed up the document-heavy work of nuclear licensing. Together with background materials on the underlying lab work, the picture that emerges is one of real, specific progress on a research reactor and a documentation tool—building blocks toward a longer-term goal of AI-assisted nuclear deployment.",
+                "score": 0.077524796
+              },
+              {
+                "title": "HHSC Plan Emphasizes Cybersecurity, AI, Data Governance - GovTech",
+                "url": "https://insider.govtech.com/texas/news/hhsc-plan-emphasizes-cybersecurity-ai-data-governance",
+                "source": "insider.govtech.com",
+                "summary": "\" name=\"twitter:description\"> HHSC Plan Emphasizes Cybersecurity, AI, Data Governance- HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. - HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. - Data priorities include analytics for fraud detection, data stewardship policies and a connected analytics data mart. # HHSC Plan Emphasizes Cybersecurity, AI, Data Governance. ## What to Know: * HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. The Texas Health and Human Services Commission's (HHSC) fiscal years 2027-2031 strategic plan places cybersecurity, artificial intelligence governance, data quality and IT procurement reform among the agency’s core operational priorities. The plan also calls for a curated, flexible data mart with strengthened data governance, technical and business metadata, and improved analytics and reporting capabilities in coordination with the Data Governance and Performance Management council.",
+                "score": 0.060180597
+              },
+              {
+                "title": "Leonardo DRS to acquire Raft for $450M - Washington Technology",
+                "url": "https://www.washingtontechnology.com/companies/2026/07/leonardo-drs-acquire-raft-450m/415056/?oref=wt-homepage-river",
+                "source": "washingtontechnology.com",
+                "summary": "# Leonardo DRS to acquire Raft for $450M. ## Leonardo DRS is looking to further build out its advanced sensing and network computing product portfolio. Leonardo DRS has agreed to acquire defense software integrator Raft for $450 million in cash as part of a push to incorporate data fusion and artificial intelligence into military systems. Raft CEO Shubhi Mishra started the company in 2018 to build open architecture software with AI and data integration functions built into the product. In its Tuesday announcement, Leonardo DRS said it is looking to build out its advanced sensing and network computing product portfolio with the addition of Raft. The acquisition of Raft will build on and accelerate the organic investment that DRS has made in that evolution,” Leonardo DRS CEO John Baylouny said in a release. “Raft adds proven software talent and open-architecture technology that complement our existing sensing and computing capabilities and strengthen our ability to deliver AI-enabled mission solutions at the speed our customers demand.”.",
+                "score": 0.047518708
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng arxiv_url được cung cấp ở lượt thứ 2 và gọi paper_text cho lượt cuối không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tải nội dung bài báo khoa học này giúp tôi."
+        },
+        {
+          "role": "user",
+          "content": "https://arxiv.org/abs/2303.08774"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc link tôi vừa gửi thôi nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call paper_text",
+          "extra tool call fetch"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://arxiv.org/abs/2303.08774"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://arxiv.org/abs/2303.08774",
+            "items": [
+              {
+                "title": "[2303.08774] GPT-4 Technical Report",
+                "url": "https://arxiv.org/abs/2303.08774",
+                "source": "arxiv.org",
+                "summary": "[Skip to main content](https://arxiv.org/abs/2303.08774#content)\n\n![](https://arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg)arXiv is now an independent nonprofit! [Learn more](https://info.arxiv.org/about) ×\n\nSearch arXiv\n\nPress Enter to search · [Advanced search](https://arxiv.org/search/advanced)\n\n# Computer Science > Computation and Language\n\n**arXiv:2303.08774** (cs)\n\n\n\\[Submitted on 15 Mar 2023 ( [v1](https://arxiv.org/abs/2303.08774v1)), last revised 4 Mar 2024 (this version, v6)\\]\n\n# Title:GPT-4 Technical Report\n\nAuthors: [OpenAI](https://arxiv.org/search/cs?searchtype=author&query=OpenAI), [Josh Achiam](https://arxiv.org/search/cs?searchtype=author&query=Achiam,+J), [Steven Adler](https://arxiv.org/search/cs?searchtype=author&query=Adler,+S), [Sandhini Agarwal](https://arxiv.org/search/cs?searchtype=author&query=Agarwal,+S), [Lama Ahmad](https://arxiv.org/search/cs?searchtype=author&query=Ahmad,+L), [Ilge Akkaya](https://arxiv.org/search/cs?searchtype=author&query=Akkaya,+I), [Florencia Leoni Aleman](https://arxiv.org/search/cs?searchtype=author&query=Aleman,+F+L), [Diogo Almeida](https://arxiv.org/search/cs?searchtype=author&query=Almeida,+D), [Janko Altenschmidt](https://arxiv.org/search/cs?searchtype=author&query=Altenschmidt,+J), [Sam Altman](https://arxiv.org/search/cs?searchtype=author&query=Altman,+S), [Shyamal Anadkat](https://arxiv.org/search/cs?searchtype=author&query=Anadkat,+S), [Red Avila](https://arxiv.org/search/cs?searchtype=author&query=Avila,+R), [Igor Babuschkin](https://arxiv.org/search/cs?searchtype=author&query=Babuschkin,+I), [Suchir Balaji](https://arxiv.org/search/cs?searchtype=author&query=Balaji,+S), [Valerie Balcom](https://arxiv.org/search/cs?searchtype=author&query=Balcom,+V), [Paul Baltescu](https://arxiv.org/search/cs?searchtype=author&query=Baltescu,+P), [Haiming Bao](https://arxiv.org/search/cs?searchtype=author&query=Bao,+H), [Mohammad Bavarian](https://arxiv.org/search/cs?searchtype=author&query=Bavarian,+M), [Jeff Belgum](https://arxiv.org/search/cs?searchtype=author&query=Belgum,+J), [Irwan Bello](https://arxiv.org/search/cs?searchtype=author&query=Bello,+I), [Jake Berdine](https://arxiv.org/search/cs?searchtype=author&query=Berdine,+J), [Gabriel Bernadett-Shapiro](https://arxiv.org/search/cs?searchtype=author&query=Bernadett-Shapiro,+G), [Christopher Berner](https://arxiv.org/search/cs?searchtype=author&query=Berner,+C), [Lenny Bogdonoff](https://arxiv.org/search/cs?searchtype=author&query=Bogdonoff,+L), [Oleg Boiko](https://arxiv.org/search/cs?searchtype=author&query=Boiko,+O), [Madelaine Boyd](https://arxiv.org/search/cs?searchtype=author&query=Boyd,+M), [Anna-Luisa Brakman](https://arxiv.org/search/cs?searchtype=author&query=Brakman,+A), [Greg Brockman](https://arxiv.org/search/cs?searchtype=author&query=Brockman,+G), [Tim Brooks](https://arxiv.org/search/cs?searchtype=author&query=Brooks,+T), [Miles Brundage](https://arxiv.org/search/cs?searchtype=author&query=Brundage,+M), [Kevin Button](https://arxiv.org/search/cs?searchtype=author&query=Button,+K), [Trevor Cai](https://arxiv.org/search/cs?searchtype=author&query=Cai,+T), [Rosie Campbell](https://arxiv.org/search/cs?searchtype=author&query=Campbell,+R), [Andrew Cann](https://arxiv.org/search/cs?searchtype=author&query=Cann,+A), [Brittany Carey](https://arxiv.org/search/cs?searchtype=author&query=Carey,+B), [Chelsea Carlson](https://arxiv.org/search/cs?searchtype=author&query=Carlson,+C), [Rory Carmichael](https://arxiv.org/search/cs?searchtype=author&query=Carmichael,+R), [Brooke Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+B), [Che Chang](https://arxiv.org/search/cs?searchtype=author&query=Chang,+C), [Fotis Chantzis](https://arxiv.org/search/cs?searchtype=author&query=Chantzis,+F), [Derek Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+D), [Sully Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+S), [Ruby Chen](https://arxiv.org/search/cs?searchtype=author&qu"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multi_unnecessary_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có dừng việc gọi lookup khi user đổi ý yêu cầu giải thích theo hiểu biết cá nhân mà không cần dùng tool không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về Gemini 1.5 Pro hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Thôi, dừng lại đi, tôi không muốn tìm nữa."
+        },
+        {
+          "role": "user",
+          "content": "Hãy cho tôi biết định nghĩa của AI Agent là gì theo hiểu biết của bạn mà không cần tìm web."
+        }
+      ],
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "AI Agent là một hệ thống trí tuệ nhân tạo có khả năng tự động thực hiện các nhiệm vụ hoặc hành động trong môi trường nhất định. Nó có thể nhận diện thông tin từ môi trường xung quanh, đưa ra quyết định dựa trên dữ liệu thu thập được và thực hiện các hành động để đạt được mục tiêu cụ thể. AI Agent thường được sử dụng trong các ứng dụng như trợ lý ảo, robot tự động, và các hệ thống tự động hóa khác, với khả năng học hỏi và cải thiện hiệu suất theo thời gian.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G10_multi_wrong_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có tuân thủ boundary và gọi clarify yes_no trước khi gửi thông điệp lên Telegram trong hội thoại multi-turn không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 3 tweet mới nhất của Sam Altman."
+        },
+        {
+          "role": "user",
+          "content": "Gửi bản tóm tắt đó qua Telegram luôn nhé."
+        },
+        {
+          "role": "user",
+          "content": "Đăng tải bản tóm tắt này lên Telegram ngay lập tức."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ]
+}
