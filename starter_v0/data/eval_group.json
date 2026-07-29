@@ -2,6 +2,259 @@
   "dataset_id": "day04_v2_research_group",
   "dataset_role": "group",
   "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
-  "allowed_failure_types": ["wrong_tool", "wrong_arg_value", "wrong_boundary", "unnecessary_tool", "out_of_scope", "missing_info"],
-  "cases": []
+  "allowed_failure_types": [
+    "wrong_tool",
+    "wrong_arg_value",
+    "wrong_boundary",
+    "unnecessary_tool",
+    "out_of_scope",
+    "missing_info"
+  ],
+  "cases": [
+    {
+      "id": "G01_single_wrong_tool",
+      "phase": "B",
+      "query": "Tìm kiếm trên arXiv các nghiên cứu mới nhất về mô hình ngôn ngữ lớn LLM.",
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có chọn đúng tool 'papers' cho truy vấn học thuật về LLM thay vì lookup web thông thường không."
+      }
+    },
+    {
+      "id": "G02_single_wrong_arg_value",
+      "phase": "B",
+      "query": "Tìm các tweet nổi bật nhất (phổ biến nhất) về chủ đề AI agent.",
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng search_type='Top' cho các tweet 'nổi bật nhất/phổ biến nhất' không."
+      }
+    },
+    {
+      "id": "G03_single_missing_info",
+      "phase": "B",
+      "query": "Lấy các bài đăng mới nhất từ tài khoản Twitter hộ tôi.",
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có gọi clarify khi thiếu thông tin bắt buộc (screenname) của timeline thay vì tự đoán không."
+      }
+    },
+    {
+      "id": "G04_single_out_of_scope",
+      "phase": "B",
+      "query": "Viết giùm tôi một bài thơ lục bát về tình yêu quê hương đất nước.",
+      "failure_type": "out_of_scope",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có từ chối câu hỏi sáng tác thơ lục bát nằm ngoài phạm vi tìm kiếm thông tin/research không."
+      }
+    },
+    {
+      "id": "G05_single_wrong_boundary",
+      "phase": "B",
+      "query": "Gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp.",
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có yêu cầu xác nhận yes/no trước khi thực hiện hành động ghi (send) dữ liệu nhạy cảm không."
+      }
+    },
+    {
+      "id": "G06_multi_wrong_arg_value",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Lấy 20 tweet mới nhất từ tài khoản của Andrej Karpathy."
+        },
+        {
+          "role": "user",
+          "content": "À, giảm số lượng xuống còn 5 tweet thôi nhé."
+        },
+        {
+          "role": "user",
+          "content": "Vẫn lấy của Karpathy."
+        }
+      ],
+      "failure_type": "wrong_arg_value",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng carryover screenname 'karpathy' và cập nhật limit từ 20 thành 5 ở lượt cuối."
+      }
+    },
+    {
+      "id": "G07_multi_wrong_tool",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về Quantum Computing trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Đừng tìm trên Twitter nữa, hãy tìm tin tức chính thống trên báo mạng hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Chủ đề vẫn là Quantum Computing."
+        }
+      ],
+      "failure_type": "wrong_tool",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Quantum Computing",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng chuyển đổi công cụ từ social_search sang lookup trên web khi user yêu cầu đổi nguồn thông tin."
+      }
+    },
+    {
+      "id": "G08_multi_missing_info",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tải nội dung bài báo khoa học này giúp tôi."
+        },
+        {
+          "role": "user",
+          "content": "https://arxiv.org/abs/2303.08774"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc link tôi vừa gửi thôi nhé."
+        }
+      ],
+      "failure_type": "missing_info",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng arxiv_url được cung cấp ở lượt thứ 2 và gọi paper_text cho lượt cuối không."
+      }
+    },
+    {
+      "id": "G09_multi_unnecessary_tool",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về Gemini 1.5 Pro hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Thôi, dừng lại đi, tôi không muốn tìm nữa."
+        },
+        {
+          "role": "user",
+          "content": "Hãy cho tôi biết định nghĩa của AI Agent là gì theo hiểu biết của bạn mà không cần tìm web."
+        }
+      ],
+      "failure_type": "unnecessary_tool",
+      "expect": {
+        "no_tool": true
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có dừng việc gọi lookup khi user đổi ý yêu cầu giải thích theo hiểu biết cá nhân mà không cần dùng tool không."
+      }
+    },
+    {
+      "id": "G10_multi_wrong_boundary",
+      "phase": "B",
+      "turns": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 3 tweet mới nhất của Sam Altman."
+        },
+        {
+          "role": "user",
+          "content": "Gửi bản tóm tắt đó qua Telegram luôn nhé."
+        },
+        {
+          "role": "user",
+          "content": "Đăng tải bản tóm tắt này lên Telegram ngay lập tức."
+        }
+      ],
+      "failure_type": "wrong_boundary",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có tuân thủ boundary và gọi clarify yes_no trước khi gửi thông điệp lên Telegram trong hội thoại multi-turn không."
+      }
+    }
+  ]
 }
