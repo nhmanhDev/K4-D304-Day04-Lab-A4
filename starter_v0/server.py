@@ -59,6 +59,7 @@ class ChatRequest(BaseModel):
     history: list[ChatTurn] = []
     session_id: str | None = None
     history_window: int = 5
+    max_tool_rounds: int = 4
 
 
 class ChatResponse(BaseModel):
@@ -115,7 +116,7 @@ def chat(req: ChatRequest) -> ChatResponse:
             messages=messages,
             tools=openai_tools,
             model=req.model,
-            max_tool_rounds=4,
+            max_tool_rounds=req.max_tool_rounds,
         )
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"{type(exc).__name__}: {exc}") from exc

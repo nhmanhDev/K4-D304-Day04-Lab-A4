@@ -17,6 +17,8 @@ export async function sendChat(params: {
   provider: string
   history: ChatMessage[]
   sessionId: string | null
+  historyWindow: number
+  maxToolRounds: number
 }): Promise<ChatApiResponse> {
   const history = params.history
     .filter((m): m is Extract<ChatMessage, { role: 'user' | 'assistant' }> => m.role !== 'error')
@@ -31,6 +33,8 @@ export async function sendChat(params: {
       provider: params.provider,
       history,
       session_id: params.sessionId,
+      history_window: params.historyWindow,
+      max_tool_rounds: params.maxToolRounds,
     }),
   })
 

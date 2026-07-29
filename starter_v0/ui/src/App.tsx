@@ -186,6 +186,8 @@ interface StoredSession {
   sessionId: string | null
   messages: ChatMessage[]
   selectedId: string | null
+  historyWindow: number
+  maxToolRounds: number
 }
 
 function loadStoredSession(): StoredSession | null {
@@ -207,6 +209,8 @@ export default function App() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(stored?.selectedId ?? null)
+  const [historyWindow, setHistoryWindow] = useState(stored?.historyWindow ?? 5)
+  const [maxToolRounds, setMaxToolRounds] = useState(stored?.maxToolRounds ?? 4)
   const [tools, setTools] = useState<ToolInfo[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -218,9 +222,9 @@ export default function App() {
 
   // Persist the conversation so a page reload / re-open doesn't lose it.
   useEffect(() => {
-    const snapshot: StoredSession = { version, sessionId, messages, selectedId }
+    const snapshot: StoredSession = { version, sessionId, messages, selectedId, historyWindow, maxToolRounds }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
-  }, [version, sessionId, messages, selectedId])
+  }, [version, sessionId, messages, selectedId, historyWindow, maxToolRounds])
 
   const selected = useMemo(
     () => messages.find((m) => m.id === selectedId && m.role === 'assistant'),
@@ -239,7 +243,7 @@ export default function App() {
     setInput('')
     setLoading(true)
     try {
-      const res = await sendChat({ message: text, version, provider, history: messages, sessionId })
+      const res = await sendChat({ message: text, version, provider, history: messages, sessionId, historyWindow, maxToolRounds })
       setSessionId(res.session_id)
       const assistantMsg: ChatMessage = {
         id: uid(),
@@ -329,6 +333,26 @@ export default function App() {
                 <option value="v2" />
                 <option value="v3" />
               </datalist>
+            </label>
+            <label>
+              <span>History</span>
+              <select value={historyWindow} onChange={(e) => setHistoryWindow(Number(e.target.value))} className="select-input">
+                {[1, 3, 5, 7, 10].map((n) => (
+                  <option key={n} value={n}>
+                    {n} cặp
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>Rounds</span>
+              <select value={maxToolRounds} onChange={(e) => setMaxToolRounds(Number(e.target.value))} className="select-input">
+                {[1, 2, 3, 4, 6, 8].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
             </label>
             <span className="session-id">session: {sessionId ?? '(new)'}</span>
             <div className="topbar-divider" />
