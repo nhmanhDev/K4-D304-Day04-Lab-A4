@@ -9,7 +9,11 @@
 tools:
   # ---------------- Core tools ----------------
   - name: clarify
-    description: "Gửi một câu hỏi cho người dùng."
+    description: |
+      Hỏi lại người dùng khi thiếu thông tin bắt buộc mà không thể suy ra được (ví dụ: chưa biết screenname, URL, hoặc cần xác nhận trước khi gửi/đăng).
+      Dùng response_type="text" để hỏi thông tin.
+      Dùng response_type="yes_no" khi cần xác nhận hành động (gửi, đăng).
+      KHÔNG đoán bừa khi thiếu arg bắt buộc.
     parameters:
       type: object
       properties:
@@ -19,7 +23,11 @@ tools:
       required: [question]
 
   - name: timeline
-    description: "Lấy các bài đăng gần đây."
+    description: |
+      Lấy các bài đăng gần đây của một tài khoản Twitter cụ thể.
+      Dùng khi user hỏi về tweet/post của MỘT NGƯỜI cụ thể.
+      Trước khi gọi, map tên thường thành handle: Sam Altman→sama, Elon Musk→elonmusk, Andrej Karpathy→karpathy.
+      Nếu không biết handle và user chưa đặt tên ai, gọi clarify để hỏi, KHÔNG tự đoán.
     parameters:
       type: object
       properties:
@@ -28,7 +36,11 @@ tools:
       required: [screenname]
 
   - name: social_search
-    description: "Tìm trên mạng xã hội."
+    description: |
+      Tìm kiếm bài đăng theo chủ đề trên mạng xã hội (Twitter).
+      Dùng khi user hỏi "mọi người đang bàn gì về X" hoặc tìm tweet theo từ khóa.
+      Dùng search_type="Top" khi user nói "phổ biến", "top", "nổi bật nhất"; mặc định là "Latest".
+      KHÔNG dùng tool này để lấy tweet của một người cụ thể (dùng timeline thay thế).
     parameters:
       type: object
       properties:
@@ -38,7 +50,14 @@ tools:
       required: [query]
 
   - name: lookup
-    description: "Tra cứu thông tin trên internet."
+    description: |
+      Tìm kiếm thông tin trên internet (web search).
+      Dùng cho tin tức, sự kiện, kiến thức chung.
+      QUAN TRỌNG về args:
+      - query: CHỆ chứa từ khóa chủ đề (ví dụ "AI", "robotics"). KHÔNG gộp từ như "news", "hôm nay", "tuần này" vào query.
+      - topic: Đặt thành "news" nếu request đề cập đến tin tức/báo chí; mặc định là "general".
+      - timeframe: "hôm nay" / "today" → "day"; "tuần này" → "week"; "tháng này" → "month".
+      KHÔNG dùng tool này nếu user đã cho URL (dùng fetch thay thế).
     parameters:
       type: object
       properties:
@@ -49,7 +68,10 @@ tools:
       required: [query]
 
   - name: fetch
-    description: "Lấy nội dung từ một địa chỉ."
+    description: |
+      Đọc nội dung từ một URL cụ thể.
+      Dùng khi user đã cung cấp link (ví dụ "tóm tắt bài này: https://...").
+      Nếu user nói "bài này" nhưng chưa có URL, gọi clarify để hỏi link, KHÔNG tự đoán URL.
     parameters:
       type: object
       properties:
@@ -79,7 +101,10 @@ tools:
 
   # ---------------- Bonus tools ----------------
   - name: send
-    description: "Gửi một đoạn văn bản đi."
+    description: |
+      Gửi một đoạn văn bản đi (ví dụ Telegram).
+      BOUNDARY QUAN TRỌNG: Trước khi gọi send, BẮT BUỘC gọi clarify(response_type="yes_no") để xác nhận với user.
+      KHÔNG tự gửi mà không có xác nhận rõ ràng.
     parameters:
       type: object
       properties:
