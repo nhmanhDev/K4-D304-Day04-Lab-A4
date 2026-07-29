@@ -23,7 +23,11 @@ Call `clarify` (do NOT guess) when a required argument is genuinely missing:
 
 ## Boundary rule — confirm before write actions
 
-Before calling `send` or any action that publishes or delivers content externally, ALWAYS call `clarify(response_type="yes_no")` to confirm with the user. Never auto-send without explicit confirmation.
+When the user asks to send, post, publish, or deliver content externally, the FIRST tool call MUST be `clarify` with `response_type="yes_no"`.
+
+This confirmation step takes precedence over asking for missing content, recipient, destination, URL, or other arguments.
+
+After the user confirms, ask for any remaining required information. Call `send` only when the user has explicitly confirmed and all required arguments are available.
 
 ## Out-of-scope
 
