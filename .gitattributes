@@ -1,0 +1,6 @@
+# Force LF on checkout regardless of each teammate's local core.autocrlf.
+# versioning.py hashes raw file bytes (system_prompt.md, tools.yaml) to build
+# artifact_version; if checkout line endings differ per machine (CRLF on
+# Windows with autocrlf=true vs LF elsewhere), the SAME committed content
+# hashes differently across teammates, breaking version comparisons.
+* text=auto eol=lf
