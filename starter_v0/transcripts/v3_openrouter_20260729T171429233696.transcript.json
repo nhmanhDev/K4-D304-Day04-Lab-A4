@@ -1,0 +1,660 @@
+{
+  "transcript_id": "v3_openrouter_20260729T171429233696",
+  "version": "v3",
+  "artifact_version": "v3+p77cac3111ad8+t6db608a5224e",
+  "prompt_hash": "77cac3111ad87e4b4655c3d190fc6f92cd0189ce6a9bbbe3dd2fdee6133a0c50",
+  "tools_hash": "6db608a5224e839b1a9ca0525d0ae057f853603570675b29784f376875c764ff",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\tools.yaml",
+  "created_at": "2026-07-29T17:14:29",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T17:14:29",
+      "user": "LLM là gì và tìm paper về LLM trên Arxiv upload trong tháng 7 năm 2026",
+      "status": "answered",
+      "assistant_text": "Dưới đây là một số bài báo về LLM được đăng tải trên Arxiv vào tháng 7 năm 2026:\n\n1. **[LLM4OSC: Profile-Bound Natural Language Control with Deterministic Validation for Open Sound Control](http://arxiv.org/abs/2607.26024v1)**\n   - **Tác giả:** Yuan-Yi Fan\n   - **Tóm tắt:** Bài báo này trình bày LLM4OSC, một kiến trúc đầu tiên tại chỗ cho phép các mô hình đề xuất JSON ý định có cấu trúc và xác thực mã trước khi gửi. Nghiên cứu cho thấy mô hình này đạt được độ chính xác ngữ nghĩa 100% trong các thử nghiệm.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26024v1)\n\n2. **[CHARM: A Multimodal Graph Foundation Model with Hierarchical Context Modeling for Zero-Shot Transfer](http://arxiv.org/abs/2607.26023v1)**\n   - **Tác giả:** Ankang Yang, Jitao Zhao, Di Jin, Yuxiao Huang, Dongxiao He\n   - **Tóm tắt:** Bài báo đề xuất CHARM, một mô hình nền tảng đồ thị đa phương thức với mô hình hóa ngữ cảnh phân cấp cho việc chuyển giao không cần đào tạo. Mô hình này giúp cải thiện khả năng chuyển giao kiến thức giữa các miền đồ thị khác nhau.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26023v1)\n\n3. **[UniMem: Complementary Episodic-to-Parametric Memory for Boundary-Agnostic Task Streams](http://arxiv.org/abs/2607.26017v1)**\n   - **Tác giả:** Siyu Xia, Chenheng Zhang, Yanting Wu, Haoxuan Li, Jiajun Chai, Xiaohan Wang, Guojun Yin, Wei Lin, Zhouchen Lin, Haifeng Zhang, Jun Wang\n   - **Tóm tắt:** Bài báo giới thiệu UniMem, một khung quản lý bộ nhớ tự động giúp cân bằng giữa tính ổn định và tính linh hoạt trong các dòng nhiệm vụ không có ranh giới.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26017v1)\n\n4. **[RepoReasoner: Evaluating Repository-Level Code Reasoning Ability of Long-Context Language Models](http://arxiv.org/abs/2607.25996v1)**\n   - **Tác giả:** Yanlin Wang, Suiquan Wang, Yanli Wang, Bowen Zhang, Daya Guo, Jiachi Chen, Zibin Zheng\n   - **Tóm tắt:** Bài báo giới thiệu RepoReasoner, một bộ tiêu chuẩn để đánh giá khả năng lý luận mã ở cấp độ kho, cho thấy rằng lý luận qua nhiều tệp vẫn là một thách thức lớn.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25996v1)\n\n5. **[Does Runtime Topology Context Improve LLM-Generated Kubernetes Security Patches?](http://arxiv.org/abs/2607.25995v1)**\n   - **Tác giả:** Farooq Shaikh\n   - **Tóm tắt:** Bài báo nghiên cứu xem liệu ngữ cảnh topological thời gian thực có cải thiện độ chính xác của các bản vá bảo mật do LLM tạo ra hay không, cho thấy sự cải thiện đáng kể trong độ chính xác của các bản vá.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25995v1)\n\nNếu bạn cần thêm thông tin chi tiết về bất kỳ bài báo nào, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "wikipedia",
+              "args": {
+                "query": "LLM",
+                "lang": "vi"
+              }
+            },
+            {
+              "name": "papers",
+              "args": {
+                "query": "LLM",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "wikipedia",
+              "args": {
+                "query": "LLM",
+                "lang": "vi"
+              },
+              "result": {
+                "tool": "wikipedia_summary",
+                "query": "LLM",
+                "found": true,
+                "title": "Mô hình ngôn ngữ lớn",
+                "extract": "Một mô hình ngôn ngữ lớn (LLM) là một mô hình ngôn ngữ với khả năng tổng quát trong việc tạo ngôn ngữ và các tác vụ xử lý ngôn ngữ tự nhiên khác. LLM có được khả năng này bằng cách học các mối quan hệ thống kê từ các văn bản trong quá trình huấn luyện tự giám sát và bán giám sát có độ phức tạp tính toán cao. LLM có thể được sử dụng cho việc tạo văn bản, một dạng trí tuệ nhân tạo tạo sinh, bằng cách nhận đầu vào văn bản và liên tục dự đoán token hoặc từ tiếp theo.",
+                "url": "https://vi.wikipedia.org/wiki/M%C3%B4_h%C3%ACnh_ng%C3%B4n_ng%E1%BB%AF_l%E1%BB%9Bn"
+              }
+            },
+            {
+              "tool": "papers",
+              "args": {
+                "query": "LLM",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "error": "ReadTimeout",
+                "message": "HTTPSConnectionPool(host='export.arxiv.org', port=443): Read timed out. (read timeout=30)"
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "**LLM (Mô hình ngôn ngữ lớn)** là một mô hình ngôn ngữ với khả năng tổng quát trong việc tạo ngôn ngữ và các tác vụ xử lý ngôn ngữ tự nhiên khác. LLM có được khả năng này bằng cách học các mối quan hệ thống kê từ các văn bản trong quá trình huấn luyện tự giám sát và bán giám sát có độ phức tạp tính toán cao. Mô hình này có thể được sử dụng cho việc tạo văn bản, một dạng trí tuệ nhân tạo tạo sinh, bằng cách nhận đầu vào văn bản và liên tục dự đoán token hoặc từ tiếp theo. Bạn có thể tìm hiểu thêm tại [đây](https://vi.wikipedia.org/wiki/M%C3%B4_h%C3%ACnh_ng%C3%B4n_ng%E1%BB%AF_l%E1%BB%9Bn).\n\nTuy nhiên, tôi gặp vấn đề khi tìm kiếm các bài báo về LLM trên Arxiv. Tôi sẽ thử lại để lấy thông tin này. Một chút thời gian nhé!",
+          "tool_calls": [
+            {
+              "name": "papers",
+              "args": {
+                "query": "LLM",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "papers",
+              "args": {
+                "query": "LLM",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "query": "LLM",
+                "api_query": "all:LLM",
+                "total_results": 75643,
+                "items": [
+                  {
+                    "arxiv_id": "2607.26024v1",
+                    "title": "LLM4OSC: Profile-Bound Natural Language Control with Deterministic Validation for Open Sound Control",
+                    "summary": "Open Sound Control (OSC) is the dominant wire protocol for real-time parametric control in professional audio, live performance, and virtual production. Large language models can emit plausible OSC, but they hallucinate addresses, mishandle type tags, and fail under paraphrase- unacceptable in show-critical contexts. We present LLM4OSC, a local-first architecture in which models propose structured intent JSON over a human-reviewed device profile, and deterministic code validates, clamps, and encodes before any UDP send. We introduce a frozen evaluation harness with CI gates on wrong-send rate: mismatches that would still pass validation and transmit. On a Max/MSP hero profile (12 patterns; 8 literal + 8 paraphrase + 4 refusal cases), after profile tag enrichment, symbolic slot fill, NL refine, and a retrieval confidence gate, backends B0--B3 all pass frozen gates (100% semantic accuracy, 0% wrong-send). B0 (rules) remains the production default at ~0.05ms; LLM backends remain ~3-4s. Historical few-shot B2 accuracy of 62.5% rises to 100% on this suite only after symbolic post-processing- not because the 0.5B model alone becomes show-safe. We argue for propose-validate-send and wrong-send rate as first-class metrics for language-to-control systems.",
+                    "authors": [
+                      "Yuan-Yi Fan"
+                    ],
+                    "published": "2026-07-28T17:36:22Z",
+                    "updated": "2026-07-28T17:36:22Z",
+                    "url": "http://arxiv.org/abs/2607.26024v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.26024v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.HC",
+                    "categories": [
+                      "cs.HC",
+                      "cs.SD",
+                      "eess.AS"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.26023v1",
+                    "title": "CHARM: A Multimodal Graph Foundation Model with Hierarchical Context Modeling for Zero-Shot Transfer",
+                    "summary": "Graph foundation models (GFMs) have emerged as a promising paradigm for transferring knowledge across graph domains and tasks. Real-world graphs associate nodes with text, images, and other modalities, making multimodal graphs essential for representing complex entities and relations. Moreover, collecting labels and adapting models for every new graph domain is costly and often infeasible, motivating zero-shot transfer. Unfortunately, zero-shot transfer on multimodal graphs remains underexplored. Existing GNN-based graph foundation models typically require downstream adaptation, whereas LLM-based graph methods mainly address unimodal graphs or tasks within a single domain. This setting presents two key challenges. First, models must generalize knowledge from individual modalities while capturing transferable cross-modal relations. Second, without target-domain fine-tuning, node representations remain entangled with domain-specific structures and modality-specific characteristics, obscuring shared concepts in unseen domains. To address these challenges, we propose CHARM, a multimodal graph foundation model with hierarchical context modeling for zero-shot transfer. CHARM replaces isolated raw nodes with hierarchical graph contexts that capture multimodal semantics and cross-modal relations. These contexts map domain-specific node patterns to shared high-level concepts, reducing reliance on target-domain supervision or adaptation. A modality-aware graph context encoder integrates multimodal information with graph structure and converts the resulting representations into graph tokens for a large language model . Experiments show consistent improvements on zero-shot multimodal graph tasks.",
+                    "authors": [
+                      "Ankang Yang",
+                      "Jitao Zhao",
+                      "Di Jin",
+                      "Yuxiao Huang",
+                      "Dongxiao He"
+                    ],
+                    "published": "2026-07-28T17:35:26Z",
+                    "updated": "2026-07-28T17:35:26Z",
+                    "url": "http://arxiv.org/abs/2607.26023v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.26023v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.AI",
+                    "categories": [
+                      "cs.AI"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.26017v1",
+                    "title": "UniMem: Complementary Episodic-to-Parametric Memory for Boundary-Agnostic Task Streams",
+                    "summary": "Memory is essential for LLM agents to accumulate task experience and reuse task-specific execution strategies. However, real-world deployment over boundary-agnostic and evolving task streams exposes a fundamental stability-plasticity dilemma. External retrieval-based memory can rapidly absorb new evidence, but it often fails to internalize recurring execution patterns and incurs inference-time retrieval overhead. Parametric memory enables stable and efficient execution once learned, but typically relies on explicit task boundaries and fixed parameter budgets. Inspired by the human brain, which balances plasticity and stability through complementary episodic storage and gradual consolidation, we propose UniMem, a self-routing framework for autonomous memory management. UniMem uses learnable routing tokens as memory controllers, enabling adaptive coordination between complementary memory pathways: novel or sparse tasks are retained in an episodic buffer for retrieval-augmented execution, while recurring and reliable patterns are consolidated into expandable parametric memory. By decoupling task identification from task execution with routing tokens and parametric memory blocks, UniMem expands memory on demand without task labels during deployment or uncontrolled parameter growth. Experiments on long-horizon streaming task sequences show that UniMem consistently outperforms baselines while maintaining execution fidelity, achieving an average gain of 4.0 EM points across three backbone models.",
+                    "authors": [
+                      "Siyu Xia",
+                      "Chenheng Zhang",
+                      "Yanting Wu",
+                      "Haoxuan Li",
+                      "Jiajun Chai",
+                      "Xiaohan Wang",
+                      "Guojun Yin",
+                      "Wei Lin",
+                      "Zhouchen Lin",
+                      "Haifeng Zhang",
+                      "Jun Wang"
+                    ],
+                    "published": "2026-07-28T17:28:21Z",
+                    "updated": "2026-07-28T17:28:21Z",
+                    "url": "http://arxiv.org/abs/2607.26017v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.26017v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CL",
+                    "categories": [
+                      "cs.CL"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.25996v1",
+                    "title": "RepoReasoner: Evaluating Repository-Level Code Reasoning Ability of Long-Context Language Models",
+                    "summary": "Recent large language models (LLMs) have shown strong performance on software engineering tasks, yet most existing benchmarks evaluate code reasoning at the function level, where all relevant information is localized. This setting fails to reflect real-world development, which requires reasoning across multiple files and complex dependency structures. We introduce RepoReasoner, a benchmark for evaluating repository-level code reasoning. It assesses two complementary abilities: Output Prediction, which measures fine-grained, stateful execution reasoning across files, and Call Chain Prediction, which evaluates high-level architectural dependency understanding under noisy context. Our benchmark is constructed through a multi-stage pipeline that leverages dynamic tracing of pytest executions to obtain ground-truth call chains, along with LLM-based I/O rewriting to reduce memorization effects. We evaluate seven state-of-the-art LLMs. Even under oracle context, the best-performing model achieves only 69.1% Pass@1 on Output Prediction, indicating that cross-file reasoning remains a major challenge. In Call Chain Prediction, models exhibit high precision but low recall, suggesting limited multi-hop dependency understanding. Furthermore, performance drops on rewritten data reveal partial reliance on memorization, and longer contexts do not consistently improve results due to noise. These findings highlight fundamental limitations in current LLMs' repository-level reasoning and motivate future work on structured architectural understanding and cross-file inference.",
+                    "authors": [
+                      "Yanlin Wang",
+                      "Suiquan Wang",
+                      "Yanli Wang",
+                      "Bowen Zhang",
+                      "Daya Guo",
+                      "Jiachi Chen",
+                      "Zibin Zheng"
+                    ],
+                    "published": "2026-07-28T17:12:41Z",
+                    "updated": "2026-07-28T17:12:41Z",
+                    "url": "http://arxiv.org/abs/2607.25996v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.25996v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.SE",
+                    "categories": [
+                      "cs.SE"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.25995v1",
+                    "title": "Does Runtime Topology Context Improve LLM-Generated Kubernetes Security Patches?",
+                    "summary": "Kubernetes is central to the cloud-native ecosystem, orchestrating containerised workloads. Recent work suggests that large language models (LLMs) can automate cluster security remediation, generating configuration patches from Kubernetes Security Posture Management (KSPM) findings without human authoring. Such systems, however, prompt the model with each finding in isolation from the live service call graph, assuming general hardening knowledge suffices. This assumption breaks down whenever a patch must preserve a runtime service dependency invisible to the model: an otherwise compliant fix then carries a destructive functional blast radius, crashing downstream callers or silently severing call edges across the cluster. Whether live cluster context improves patch correctness has not been measured under controlled conditions across multiple dependency classes. We introduce KuTIE (Kubernetes Topology Intelligence Engine), which builds a live cluster context from Istio call edges, Trivy KSPM findings, and the service-account bindings a workload reads, and conditions LLM patch generation on it. It is evaluated on VulnCare, a purpose-built 36-deployment, four-namespace healthcare cluster with 31 injectable findings across seven dependency classes, each labelled by topology dependence against cluster ground truth. Across 248 trials, topology context raises topology-dependent patch correctness from 11.1% to 78.0% ($Δ= 0.669$), a gap that holds for every model and for six of seven classes, from credential and network-policy ($Δ= 0.95$) to role-based access control ($Δ= 0.31$); a topology-independent control exhibits no such effect ($Δ= 0.0$), isolating the result from generic prompt enrichment. Supplying the live service-call graph and the service-account bindings it exposes thus improves remediation of topology-dependent findings well beyond scanner-only context.",
+                    "authors": [
+                      "Farooq Shaikh"
+                    ],
+                    "published": "2026-07-28T17:12:12Z",
+                    "updated": "2026-07-28T17:12:12Z",
+                    "url": "http://arxiv.org/abs/2607.25995v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.25995v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CR",
+                    "categories": [
+                      "cs.CR",
+                      "cs.AI"
+                    ]
+                  }
+                ],
+                "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+              }
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "assistant_text": "Dưới đây là một số bài báo về LLM được đăng tải trên Arxiv vào tháng 7 năm 2026:\n\n1. **[LLM4OSC: Profile-Bound Natural Language Control with Deterministic Validation for Open Sound Control](http://arxiv.org/abs/2607.26024v1)**\n   - **Tác giả:** Yuan-Yi Fan\n   - **Tóm tắt:** Bài báo này trình bày LLM4OSC, một kiến trúc đầu tiên tại chỗ cho phép các mô hình đề xuất JSON ý định có cấu trúc và xác thực mã trước khi gửi. Nghiên cứu cho thấy mô hình này đạt được độ chính xác ngữ nghĩa 100% trong các thử nghiệm.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26024v1)\n\n2. **[CHARM: A Multimodal Graph Foundation Model with Hierarchical Context Modeling for Zero-Shot Transfer](http://arxiv.org/abs/2607.26023v1)**\n   - **Tác giả:** Ankang Yang, Jitao Zhao, Di Jin, Yuxiao Huang, Dongxiao He\n   - **Tóm tắt:** Bài báo đề xuất CHARM, một mô hình nền tảng đồ thị đa phương thức với mô hình hóa ngữ cảnh phân cấp cho việc chuyển giao không cần đào tạo. Mô hình này giúp cải thiện khả năng chuyển giao kiến thức giữa các miền đồ thị khác nhau.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26023v1)\n\n3. **[UniMem: Complementary Episodic-to-Parametric Memory for Boundary-Agnostic Task Streams](http://arxiv.org/abs/2607.26017v1)**\n   - **Tác giả:** Siyu Xia, Chenheng Zhang, Yanting Wu, Haoxuan Li, Jiajun Chai, Xiaohan Wang, Guojun Yin, Wei Lin, Zhouchen Lin, Haifeng Zhang, Jun Wang\n   - **Tóm tắt:** Bài báo giới thiệu UniMem, một khung quản lý bộ nhớ tự động giúp cân bằng giữa tính ổn định và tính linh hoạt trong các dòng nhiệm vụ không có ranh giới.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.26017v1)\n\n4. **[RepoReasoner: Evaluating Repository-Level Code Reasoning Ability of Long-Context Language Models](http://arxiv.org/abs/2607.25996v1)**\n   - **Tác giả:** Yanlin Wang, Suiquan Wang, Yanli Wang, Bowen Zhang, Daya Guo, Jiachi Chen, Zibin Zheng\n   - **Tóm tắt:** Bài báo giới thiệu RepoReasoner, một bộ tiêu chuẩn để đánh giá khả năng lý luận mã ở cấp độ kho, cho thấy rằng lý luận qua nhiều tệp vẫn là một thách thức lớn.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25996v1)\n\n5. **[Does Runtime Topology Context Improve LLM-Generated Kubernetes Security Patches?](http://arxiv.org/abs/2607.25995v1)**\n   - **Tác giả:** Farooq Shaikh\n   - **Tóm tắt:** Bài báo nghiên cứu xem liệu ngữ cảnh topological thời gian thực có cải thiện độ chính xác của các bản vá bảo mật do LLM tạo ra hay không, cho thấy sự cải thiện đáng kể trong độ chính xác của các bản vá.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25995v1)\n\nNếu bạn cần thêm thông tin chi tiết về bất kỳ bài báo nào, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "wikipedia",
+          "args": {
+            "query": "LLM",
+            "lang": "vi"
+          },
+          "result": {
+            "tool": "wikipedia_summary",
+            "query": "LLM",
+            "found": true,
+            "title": "Mô hình ngôn ngữ lớn",
+            "extract": "Một mô hình ngôn ngữ lớn (LLM) là một mô hình ngôn ngữ với khả năng tổng quát trong việc tạo ngôn ngữ và các tác vụ xử lý ngôn ngữ tự nhiên khác. LLM có được khả năng này bằng cách học các mối quan hệ thống kê từ các văn bản trong quá trình huấn luyện tự giám sát và bán giám sát có độ phức tạp tính toán cao. LLM có thể được sử dụng cho việc tạo văn bản, một dạng trí tuệ nhân tạo tạo sinh, bằng cách nhận đầu vào văn bản và liên tục dự đoán token hoặc từ tiếp theo.",
+            "url": "https://vi.wikipedia.org/wiki/M%C3%B4_h%C3%ACnh_ng%C3%B4n_ng%E1%BB%AF_l%E1%BB%9Bn"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "LLM",
+            "max_results": 5,
+            "sort_by": "submittedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "error": "ReadTimeout",
+            "message": "HTTPSConnectionPool(host='export.arxiv.org', port=443): Read timed out. (read timeout=30)"
+          }
+        },
+        {
+          "tool": "papers",
+          "args": {
+            "query": "LLM",
+            "max_results": 5,
+            "sort_by": "submittedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "LLM",
+            "api_query": "all:LLM",
+            "total_results": 75643,
+            "items": [
+              {
+                "arxiv_id": "2607.26024v1",
+                "title": "LLM4OSC: Profile-Bound Natural Language Control with Deterministic Validation for Open Sound Control",
+                "summary": "Open Sound Control (OSC) is the dominant wire protocol for real-time parametric control in professional audio, live performance, and virtual production. Large language models can emit plausible OSC, but they hallucinate addresses, mishandle type tags, and fail under paraphrase- unacceptable in show-critical contexts. We present LLM4OSC, a local-first architecture in which models propose structured intent JSON over a human-reviewed device profile, and deterministic code validates, clamps, and encodes before any UDP send. We introduce a frozen evaluation harness with CI gates on wrong-send rate: mismatches that would still pass validation and transmit. On a Max/MSP hero profile (12 patterns; 8 literal + 8 paraphrase + 4 refusal cases), after profile tag enrichment, symbolic slot fill, NL refine, and a retrieval confidence gate, backends B0--B3 all pass frozen gates (100% semantic accuracy, 0% wrong-send). B0 (rules) remains the production default at ~0.05ms; LLM backends remain ~3-4s. Historical few-shot B2 accuracy of 62.5% rises to 100% on this suite only after symbolic post-processing- not because the 0.5B model alone becomes show-safe. We argue for propose-validate-send and wrong-send rate as first-class metrics for language-to-control systems.",
+                "authors": [
+                  "Yuan-Yi Fan"
+                ],
+                "published": "2026-07-28T17:36:22Z",
+                "updated": "2026-07-28T17:36:22Z",
+                "url": "http://arxiv.org/abs/2607.26024v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26024v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.HC",
+                "categories": [
+                  "cs.HC",
+                  "cs.SD",
+                  "eess.AS"
+                ]
+              },
+              {
+                "arxiv_id": "2607.26023v1",
+                "title": "CHARM: A Multimodal Graph Foundation Model with Hierarchical Context Modeling for Zero-Shot Transfer",
+                "summary": "Graph foundation models (GFMs) have emerged as a promising paradigm for transferring knowledge across graph domains and tasks. Real-world graphs associate nodes with text, images, and other modalities, making multimodal graphs essential for representing complex entities and relations. Moreover, collecting labels and adapting models for every new graph domain is costly and often infeasible, motivating zero-shot transfer. Unfortunately, zero-shot transfer on multimodal graphs remains underexplored. Existing GNN-based graph foundation models typically require downstream adaptation, whereas LLM-based graph methods mainly address unimodal graphs or tasks within a single domain. This setting presents two key challenges. First, models must generalize knowledge from individual modalities while capturing transferable cross-modal relations. Second, without target-domain fine-tuning, node representations remain entangled with domain-specific structures and modality-specific characteristics, obscuring shared concepts in unseen domains. To address these challenges, we propose CHARM, a multimodal graph foundation model with hierarchical context modeling for zero-shot transfer. CHARM replaces isolated raw nodes with hierarchical graph contexts that capture multimodal semantics and cross-modal relations. These contexts map domain-specific node patterns to shared high-level concepts, reducing reliance on target-domain supervision or adaptation. A modality-aware graph context encoder integrates multimodal information with graph structure and converts the resulting representations into graph tokens for a large language model . Experiments show consistent improvements on zero-shot multimodal graph tasks.",
+                "authors": [
+                  "Ankang Yang",
+                  "Jitao Zhao",
+                  "Di Jin",
+                  "Yuxiao Huang",
+                  "Dongxiao He"
+                ],
+                "published": "2026-07-28T17:35:26Z",
+                "updated": "2026-07-28T17:35:26Z",
+                "url": "http://arxiv.org/abs/2607.26023v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26023v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2607.26017v1",
+                "title": "UniMem: Complementary Episodic-to-Parametric Memory for Boundary-Agnostic Task Streams",
+                "summary": "Memory is essential for LLM agents to accumulate task experience and reuse task-specific execution strategies. However, real-world deployment over boundary-agnostic and evolving task streams exposes a fundamental stability-plasticity dilemma. External retrieval-based memory can rapidly absorb new evidence, but it often fails to internalize recurring execution patterns and incurs inference-time retrieval overhead. Parametric memory enables stable and efficient execution once learned, but typically relies on explicit task boundaries and fixed parameter budgets. Inspired by the human brain, which balances plasticity and stability through complementary episodic storage and gradual consolidation, we propose UniMem, a self-routing framework for autonomous memory management. UniMem uses learnable routing tokens as memory controllers, enabling adaptive coordination between complementary memory pathways: novel or sparse tasks are retained in an episodic buffer for retrieval-augmented execution, while recurring and reliable patterns are consolidated into expandable parametric memory. By decoupling task identification from task execution with routing tokens and parametric memory blocks, UniMem expands memory on demand without task labels during deployment or uncontrolled parameter growth. Experiments on long-horizon streaming task sequences show that UniMem consistently outperforms baselines while maintaining execution fidelity, achieving an average gain of 4.0 EM points across three backbone models.",
+                "authors": [
+                  "Siyu Xia",
+                  "Chenheng Zhang",
+                  "Yanting Wu",
+                  "Haoxuan Li",
+                  "Jiajun Chai",
+                  "Xiaohan Wang",
+                  "Guojun Yin",
+                  "Wei Lin",
+                  "Zhouchen Lin",
+                  "Haifeng Zhang",
+                  "Jun Wang"
+                ],
+                "published": "2026-07-28T17:28:21Z",
+                "updated": "2026-07-28T17:28:21Z",
+                "url": "http://arxiv.org/abs/2607.26017v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26017v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25996v1",
+                "title": "RepoReasoner: Evaluating Repository-Level Code Reasoning Ability of Long-Context Language Models",
+                "summary": "Recent large language models (LLMs) have shown strong performance on software engineering tasks, yet most existing benchmarks evaluate code reasoning at the function level, where all relevant information is localized. This setting fails to reflect real-world development, which requires reasoning across multiple files and complex dependency structures. We introduce RepoReasoner, a benchmark for evaluating repository-level code reasoning. It assesses two complementary abilities: Output Prediction, which measures fine-grained, stateful execution reasoning across files, and Call Chain Prediction, which evaluates high-level architectural dependency understanding under noisy context. Our benchmark is constructed through a multi-stage pipeline that leverages dynamic tracing of pytest executions to obtain ground-truth call chains, along with LLM-based I/O rewriting to reduce memorization effects. We evaluate seven state-of-the-art LLMs. Even under oracle context, the best-performing model achieves only 69.1% Pass@1 on Output Prediction, indicating that cross-file reasoning remains a major challenge. In Call Chain Prediction, models exhibit high precision but low recall, suggesting limited multi-hop dependency understanding. Furthermore, performance drops on rewritten data reveal partial reliance on memorization, and longer contexts do not consistently improve results due to noise. These findings highlight fundamental limitations in current LLMs' repository-level reasoning and motivate future work on structured architectural understanding and cross-file inference.",
+                "authors": [
+                  "Yanlin Wang",
+                  "Suiquan Wang",
+                  "Yanli Wang",
+                  "Bowen Zhang",
+                  "Daya Guo",
+                  "Jiachi Chen",
+                  "Zibin Zheng"
+                ],
+                "published": "2026-07-28T17:12:41Z",
+                "updated": "2026-07-28T17:12:41Z",
+                "url": "http://arxiv.org/abs/2607.25996v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25996v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.SE",
+                "categories": [
+                  "cs.SE"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25995v1",
+                "title": "Does Runtime Topology Context Improve LLM-Generated Kubernetes Security Patches?",
+                "summary": "Kubernetes is central to the cloud-native ecosystem, orchestrating containerised workloads. Recent work suggests that large language models (LLMs) can automate cluster security remediation, generating configuration patches from Kubernetes Security Posture Management (KSPM) findings without human authoring. Such systems, however, prompt the model with each finding in isolation from the live service call graph, assuming general hardening knowledge suffices. This assumption breaks down whenever a patch must preserve a runtime service dependency invisible to the model: an otherwise compliant fix then carries a destructive functional blast radius, crashing downstream callers or silently severing call edges across the cluster. Whether live cluster context improves patch correctness has not been measured under controlled conditions across multiple dependency classes. We introduce KuTIE (Kubernetes Topology Intelligence Engine), which builds a live cluster context from Istio call edges, Trivy KSPM findings, and the service-account bindings a workload reads, and conditions LLM patch generation on it. It is evaluated on VulnCare, a purpose-built 36-deployment, four-namespace healthcare cluster with 31 injectable findings across seven dependency classes, each labelled by topology dependence against cluster ground truth. Across 248 trials, topology context raises topology-dependent patch correctness from 11.1% to 78.0% ($Δ= 0.669$), a gap that holds for every model and for six of seven classes, from credential and network-policy ($Δ= 0.95$) to role-based access control ($Δ= 0.31$); a topology-independent control exhibits no such effect ($Δ= 0.0$), isolating the result from generic prompt enrichment. Supplying the live service-call graph and the service-account bindings it exposes thus improves remediation of topology-dependent findings well beyond scanner-only context.",
+                "authors": [
+                  "Farooq Shaikh"
+                ],
+                "published": "2026-07-28T17:12:12Z",
+                "updated": "2026-07-28T17:12:12Z",
+                "url": "http://arxiv.org/abs/2607.25995v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25995v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T17:14:29"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T17:16:12",
+      "user": "Nhầm, MAMBA chứ",
+      "status": "answered",
+      "assistant_text": "Dưới đây là một số bài báo về MAMBA được đăng tải trên Arxiv vào tháng 7 năm 2026:\n\n1. **[FLASH: Efficient Impact Fall Detection with Unified Hypergraph State-Space Model](http://arxiv.org/abs/2607.25791v1)**\n   - **Tác giả:** Tresor Y. Koffi, Youssef Mourchid, Yohan Dupuis\n   - **Tóm tắt:** Bài báo này đề xuất FLASH, một khung tích hợp các đại diện hypergraph với các mô hình trạng thái Mamba để phát hiện va chạm hiệu quả. Nghiên cứu cho thấy FLASH đạt độ chính xác cao với khả năng suy diễn thời gian thực.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25791v1)\n\n2. **[LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection](http://arxiv.org/abs/2607.24184v1)**\n   - **Tác giả:** Yuhao Fan, Le Hui, Yuchao Dai\n   - **Tóm tắt:** Bài báo giới thiệu LCMamNet, một mạng Mamba nhẹ giúp phát hiện mục tiêu nhỏ trong hình ảnh hồng ngoại, với khả năng tương tác đa quy mô và phục hồi chi tiết không gian.\n   - **Ngày xuất bản:** 27 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.24184v1)\n\n3. **[A Controlled Visual-Backbone Benchmark for Multimodal Short-Term Solar Irradiance Forecasting](http://arxiv.org/abs/2607.23633v1)**\n   - **Tác giả:** Oshadha Samarakoon, Dushan Herath, Ishara Ranmandala, và các tác giả khác\n   - **Tóm tắt:** Bài báo này so sánh các kiến trúc visual backbone khác nhau trong dự đoán bức xạ mặt trời ngắn hạn, sử dụng Mamba và các phương pháp khác.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23633v1)\n\n4. **[Direction-adaptive Mamba: Spatial-Frequency Dual-Domain Collaborative Learning for PolSAR Image Classification](http://arxiv.org/abs/2607.23464v1)**\n   - **Tác giả:** Junfei Shi, Yu Cheng, Haojia Zhang, và các tác giả khác\n   - **Tóm tắt:** Bài báo đề xuất DA-Mamba, một khung học tập hợp tác đa miền cho phân loại hình ảnh PolSAR, giúp cải thiện khả năng phân loại với các đặc điểm hướng thích ứng.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23464v1)\n\n5. **[Multi-Modal Object Re-Identification with Prompt-S6 and Semantic-Aware Knowledge Guidance](http://arxiv.org/abs/2607.23451v1)**\n   - **Tác giả:** Weixiang Zhou, Jiabei Zuo, Yuhao Wang, và các tác giả khác\n   - **Tóm tắt:** Bài báo này giới thiệu PRISM, một khung ReID đa phương thức, sử dụng Mamba để cải thiện khả năng tương tác giữa các phương thức và giảm thiểu nhiễu nền.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23451v1)\n\nNếu bạn cần thêm thông tin chi tiết về bất kỳ bài báo nào, hãy cho tôi biết!",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": null,
+          "tool_calls": [
+            {
+              "name": "papers",
+              "args": {
+                "query": "MAMBA",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "papers",
+              "args": {
+                "query": "MAMBA",
+                "max_results": 5,
+                "sort_by": "submittedDate"
+              },
+              "result": {
+                "tool": "arxiv_search",
+                "query": "MAMBA",
+                "api_query": "all:MAMBA",
+                "total_results": 2110,
+                "items": [
+                  {
+                    "arxiv_id": "2607.25791v1",
+                    "title": "FLASH: Efficient Impact Fall Detection with Unified Hypergraph State-Space Model",
+                    "summary": "Falls represent a critical public health challenge, and accurate detection of the impact moment when an individual hits the ground is crucial for timely intervention. Existing skeleton-based methods rely on graph neural networks modeling only pairwise joint connections, failing to capture multi-joint coordination characteristic of fall impacts, while transformer-based temporal models suffer from quadratic complexity limiting real-time deployment. We propose FLASH, a novel framework integrating single-matrix hypergraph representations with Mamba's selective state-space models through adaptive feedback mechanisms for efficient impact detection. Our approach constructs biomechanically-grounded hyperedges to model functional joint coordination while leveraging Mamba's linear-time complexity to capture temporal dynamics. Experiments on UP-Fall and UMAFall datasets demonstrate that FLASH achieves state-of-the-art accuracy with real-time inference capability and strong zero-shot cross-dataset generalization, while significantly reducing computational cost compared to dual-representation and transformer-based methods. The model provides interpretable feedback through learned attention patterns aligned with biomechanical principles. Code is available at https://github.com/Tresor-Koffi/FLASH-Impact-Fall-Detection.",
+                    "authors": [
+                      "Tresor Y. Koffi",
+                      "Youssef Mourchid",
+                      "Yohan Dupuis"
+                    ],
+                    "published": "2026-07-28T14:43:07Z",
+                    "updated": "2026-07-28T14:43:07Z",
+                    "url": "http://arxiv.org/abs/2607.25791v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.25791v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.24184v1",
+                    "title": "LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection",
+                    "summary": "Infrared small target detection (IRSTD) is important for low-altitude perception, unmanned-system warning, and security monitoring. However, weak targets in infrared imagery usually occupy only a few pixels and are easily submerged by cloud clutter, ground edges, and bright noise, making it difficult for lightweight segmentation-based methods to preserve local target structures while suppressing background interference. To address these challenges, we propose LCMamNet, a lightweight cross-scale Mamba network that progressively enhances local target structures, interacts cross-scale context in a latent space, and restores spatial details with background suppression. Specifically, a compact hierarchical encoder with cross-shaped directional bottleneck residual (CDBR) blocks strengthens direction-sensitive target structures under a small computation budget. A latent dense cross-scale fusion (LDCF) module then performs dense all-level interaction through bidirectional Mamba modeling and reorganizes the interacted features into stable hierarchical semantics. Finally, a progressive decoder selectively recovers shallow spatial details while suppressing irrelevant background textures. Extensive experiments on IRSTD-1k, NUAA-SIRST, and NUDT-SIRST show that the proposed network achieves mIoU scores of 71.25\\%, 79.60\\%, and 95.58\\%, respectively, with only 1.175M parameters and 6.91 GFLOPs. It also runs with a mean inference latency of 6.62 ms, and deployment results on an NVIDIA Jetson Orin NX 16G SUPER further demonstrate its practical potential for real-time edge inference. The code and checkpoints are publicly available at https://github.com/Haoyu096/LCMamNet.",
+                    "authors": [
+                      "Yuhao Fan",
+                      "Le Hui",
+                      "Yuchao Dai"
+                    ],
+                    "published": "2026-07-27T09:06:14Z",
+                    "updated": "2026-07-27T09:06:14Z",
+                    "url": "http://arxiv.org/abs/2607.24184v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.24184v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.23633v1",
+                    "title": "A Controlled Visual-Backbone Benchmark for Multimodal Short-Term Solar Irradiance Forecasting",
+                    "summary": "Sky-image irradiance studies often compare forecasting systems in which the image encoder, temporal model, fusion block, target definition, and training recipe all change together. We use a narrower protocol: the multimodal forecasting pipeline is fixed, and only the visual backbone is varied. The shared setup keeps preprocessing, clear-sky-index normalization, weather-history encoding, fusion, regression head, loss, optimizer schedule, seed, and chronological split policy unchanged. We compare ConvNeXt, Swin Transformer, VMamba, Spatial Mamba, and MambaVision backbones for 10min-ahead forecasting on Folsom and a strict matched NREL split. Forecast skill is measured against clear-sky-index smart persistence, and temporal-only rows are reported as weather-history diagnostics rather than as the main ranking criterion. On the Folsom strict split, all evaluated visual-backbone runs improve over smart persistence. In the evaluated single-seed strict runs, VMamba Small and Swin Base reach matched Folsom RMSE values of 65.39 W/m^2 and 65.50 W/m^2; the temporal-only diagnostic reaches 69.51 W/m^2. On the 313-sample NREL strict split, smart persistence remains strongest at 17.48 W/m^2, while the lowest visual RMSE is obtained by Swin Tiny at 23.76 W/m^2. These results provide a reproducible encoder comparison under one fixed multimodal operating point rather than establishing architecture-level dominance, statistically resolved ranking, or fully optimized forecasting performance. Code available here: https://github.com/Oshadha345/irradiance_benchmark",
+                    "authors": [
+                      "Oshadha Samarakoon",
+                      "Dushan Herath",
+                      "Ishara Ranmandala",
+                      "Dilshara Herath",
+                      "Roshan Godaliyadda",
+                      "Parakrama Ekanayake",
+                      "Vijitha Herath"
+                    ],
+                    "published": "2026-07-26T12:38:06Z",
+                    "updated": "2026-07-26T12:38:06Z",
+                    "url": "http://arxiv.org/abs/2607.23633v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.23633v1",
+                    "source": "arxiv.org",
+                    "primary_category": "eess.IV",
+                    "categories": [
+                      "eess.IV",
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.23464v1",
+                    "title": "Direction-adaptive Mamba: Spatial-Frequency Dual-Domain Collaborative Learning for PolSAR Image Classification",
+                    "summary": "Deep learning dominates polarimetric synthetic aperture radar (PolSAR) image classification, with Mamba architectures serving as favorable backbones due to linear complexity and strong global modeling capacity. However, existing PolSAR Mamba methods have two critical flaws: pure spatial processing discards fine-grained edges and textures, and fixed scanning patterns fail to model direction-variant anisotropic scattering and weak boundaries essential for PolSAR physical analysis. This work proposes DA-Mamba, a direction-adaptive Mamba framework with dual-domain collaborative learning for PolSAR classification. Equipped with an edge-aligned direction-adaptive scanning scheme, DA-Mamba captures long-range spatial dependencies and accurate boundary details. It adopts the Non-Subsampled Contourlet Transform (NSCT) to separate PolSAR data into low-frequency global components and multi-directional high-frequency subbands, extracting anisotropic structural features from high-frequency information while preserving global context via low-frequency branches. A dual-domain collaborative learning module further integrates spatial scattering and frequency-domain representations to strengthen feature discriminability. Evaluated on three real-world PolSAR datasets, DA-Mamba surpasses state-of-the-art methods, verifying the efficacy of the proposed adaptive scanning and dual-domain fusion designs. Code will be publicly available.",
+                    "authors": [
+                      "Junfei Shi",
+                      "Yu Cheng",
+                      "Haojia Zhang",
+                      "Wenqiang Hua",
+                      "Junhuai Li",
+                      "Maoguo Gong"
+                    ],
+                    "published": "2026-07-26T05:17:07Z",
+                    "updated": "2026-07-26T05:17:07Z",
+                    "url": "http://arxiv.org/abs/2607.23464v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.23464v1",
+                    "source": "arxiv.org",
+                    "primary_category": "eess.IV",
+                    "categories": [
+                      "eess.IV",
+                      "cs.CV"
+                    ]
+                  },
+                  {
+                    "arxiv_id": "2607.23451v1",
+                    "title": "Multi-Modal Object Re-Identification with Prompt-S6 and Semantic-Aware Knowledge Guidance",
+                    "summary": "Multi-modal object Re-Identification (ReID) aims to retrieve specific objects by integrating complementary information from multiple modalities. However, existing multi-modal ReID methods do not effectively address background interference suppression or achieve tri-modal alignment, instead focusing on pairwise feature fusion. Moreover, many current aggregation approaches suffer from high computational complexity. To address these limitations, we propose PRISM, a novel multi-modal ReID framework built upon Prompt-S6 (PS6) and semantic-aware knowledge guidance. PS6 maintains the linear complexity and strong sequence modeling capability of Mamba while enabling efficient cross-modal interaction. Leveraging these advantages, we design two key components: Semantic-Driven Token Pruning (SDTP) and Progressive Fusion Network (PFN). Parsing semantic priors from the segmentation foundation models, the SDTP then leverages these priors and applies dynamic token pruning to suppress background noise and refine feature representations. The PFN progressively aggregates multi-modal features to achieve tri-modal alignment and fully exploit modality complementarity. With the proposed modules, PRISM generates more robust multi-modal representations under complex scenarios. Extensive experiments on four multi-modal object ReID benchmarks demonstrate the effectiveness and efficiency of our approach. The source code is available at https://github.com/zw-absin/PRISM.",
+                    "authors": [
+                      "Weixiang Zhou",
+                      "Jiabei Zuo",
+                      "Yuhao Wang",
+                      "Cong Wang",
+                      "Huchuan Lu",
+                      "Zhixun Su"
+                    ],
+                    "published": "2026-07-26T04:29:48Z",
+                    "updated": "2026-07-26T04:29:48Z",
+                    "url": "http://arxiv.org/abs/2607.23451v1",
+                    "pdf_url": "https://arxiv.org/pdf/2607.23451v1",
+                    "source": "arxiv.org",
+                    "primary_category": "cs.CV",
+                    "categories": [
+                      "cs.CV"
+                    ]
+                  }
+                ],
+                "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+              }
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "assistant_text": "Dưới đây là một số bài báo về MAMBA được đăng tải trên Arxiv vào tháng 7 năm 2026:\n\n1. **[FLASH: Efficient Impact Fall Detection with Unified Hypergraph State-Space Model](http://arxiv.org/abs/2607.25791v1)**\n   - **Tác giả:** Tresor Y. Koffi, Youssef Mourchid, Yohan Dupuis\n   - **Tóm tắt:** Bài báo này đề xuất FLASH, một khung tích hợp các đại diện hypergraph với các mô hình trạng thái Mamba để phát hiện va chạm hiệu quả. Nghiên cứu cho thấy FLASH đạt độ chính xác cao với khả năng suy diễn thời gian thực.\n   - **Ngày xuất bản:** 28 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.25791v1)\n\n2. **[LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection](http://arxiv.org/abs/2607.24184v1)**\n   - **Tác giả:** Yuhao Fan, Le Hui, Yuchao Dai\n   - **Tóm tắt:** Bài báo giới thiệu LCMamNet, một mạng Mamba nhẹ giúp phát hiện mục tiêu nhỏ trong hình ảnh hồng ngoại, với khả năng tương tác đa quy mô và phục hồi chi tiết không gian.\n   - **Ngày xuất bản:** 27 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.24184v1)\n\n3. **[A Controlled Visual-Backbone Benchmark for Multimodal Short-Term Solar Irradiance Forecasting](http://arxiv.org/abs/2607.23633v1)**\n   - **Tác giả:** Oshadha Samarakoon, Dushan Herath, Ishara Ranmandala, và các tác giả khác\n   - **Tóm tắt:** Bài báo này so sánh các kiến trúc visual backbone khác nhau trong dự đoán bức xạ mặt trời ngắn hạn, sử dụng Mamba và các phương pháp khác.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23633v1)\n\n4. **[Direction-adaptive Mamba: Spatial-Frequency Dual-Domain Collaborative Learning for PolSAR Image Classification](http://arxiv.org/abs/2607.23464v1)**\n   - **Tác giả:** Junfei Shi, Yu Cheng, Haojia Zhang, và các tác giả khác\n   - **Tóm tắt:** Bài báo đề xuất DA-Mamba, một khung học tập hợp tác đa miền cho phân loại hình ảnh PolSAR, giúp cải thiện khả năng phân loại với các đặc điểm hướng thích ứng.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23464v1)\n\n5. **[Multi-Modal Object Re-Identification with Prompt-S6 and Semantic-Aware Knowledge Guidance](http://arxiv.org/abs/2607.23451v1)**\n   - **Tác giả:** Weixiang Zhou, Jiabei Zuo, Yuhao Wang, và các tác giả khác\n   - **Tóm tắt:** Bài báo này giới thiệu PRISM, một khung ReID đa phương thức, sử dụng Mamba để cải thiện khả năng tương tác giữa các phương thức và giảm thiểu nhiễu nền.\n   - **Ngày xuất bản:** 26 tháng 7, 2026\n   - [PDF](https://arxiv.org/pdf/2607.23451v1)\n\nNếu bạn cần thêm thông tin chi tiết về bất kỳ bài báo nào, hãy cho tôi biết!",
+          "tool_calls": [],
+          "tool_results": []
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "MAMBA",
+            "max_results": 5,
+            "sort_by": "submittedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "MAMBA",
+            "api_query": "all:MAMBA",
+            "total_results": 2110,
+            "items": [
+              {
+                "arxiv_id": "2607.25791v1",
+                "title": "FLASH: Efficient Impact Fall Detection with Unified Hypergraph State-Space Model",
+                "summary": "Falls represent a critical public health challenge, and accurate detection of the impact moment when an individual hits the ground is crucial for timely intervention. Existing skeleton-based methods rely on graph neural networks modeling only pairwise joint connections, failing to capture multi-joint coordination characteristic of fall impacts, while transformer-based temporal models suffer from quadratic complexity limiting real-time deployment. We propose FLASH, a novel framework integrating single-matrix hypergraph representations with Mamba's selective state-space models through adaptive feedback mechanisms for efficient impact detection. Our approach constructs biomechanically-grounded hyperedges to model functional joint coordination while leveraging Mamba's linear-time complexity to capture temporal dynamics. Experiments on UP-Fall and UMAFall datasets demonstrate that FLASH achieves state-of-the-art accuracy with real-time inference capability and strong zero-shot cross-dataset generalization, while significantly reducing computational cost compared to dual-representation and transformer-based methods. The model provides interpretable feedback through learned attention patterns aligned with biomechanical principles. Code is available at https://github.com/Tresor-Koffi/FLASH-Impact-Fall-Detection.",
+                "authors": [
+                  "Tresor Y. Koffi",
+                  "Youssef Mourchid",
+                  "Yohan Dupuis"
+                ],
+                "published": "2026-07-28T14:43:07Z",
+                "updated": "2026-07-28T14:43:07Z",
+                "url": "http://arxiv.org/abs/2607.25791v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25791v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2607.24184v1",
+                "title": "LCMamNet: A Lightweight Cross-scale Mamba Network for Infrared Small Target Detection",
+                "summary": "Infrared small target detection (IRSTD) is important for low-altitude perception, unmanned-system warning, and security monitoring. However, weak targets in infrared imagery usually occupy only a few pixels and are easily submerged by cloud clutter, ground edges, and bright noise, making it difficult for lightweight segmentation-based methods to preserve local target structures while suppressing background interference. To address these challenges, we propose LCMamNet, a lightweight cross-scale Mamba network that progressively enhances local target structures, interacts cross-scale context in a latent space, and restores spatial details with background suppression. Specifically, a compact hierarchical encoder with cross-shaped directional bottleneck residual (CDBR) blocks strengthens direction-sensitive target structures under a small computation budget. A latent dense cross-scale fusion (LDCF) module then performs dense all-level interaction through bidirectional Mamba modeling and reorganizes the interacted features into stable hierarchical semantics. Finally, a progressive decoder selectively recovers shallow spatial details while suppressing irrelevant background textures. Extensive experiments on IRSTD-1k, NUAA-SIRST, and NUDT-SIRST show that the proposed network achieves mIoU scores of 71.25\\%, 79.60\\%, and 95.58\\%, respectively, with only 1.175M parameters and 6.91 GFLOPs. It also runs with a mean inference latency of 6.62 ms, and deployment results on an NVIDIA Jetson Orin NX 16G SUPER further demonstrate its practical potential for real-time edge inference. The code and checkpoints are publicly available at https://github.com/Haoyu096/LCMamNet.",
+                "authors": [
+                  "Yuhao Fan",
+                  "Le Hui",
+                  "Yuchao Dai"
+                ],
+                "published": "2026-07-27T09:06:14Z",
+                "updated": "2026-07-27T09:06:14Z",
+                "url": "http://arxiv.org/abs/2607.24184v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.24184v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2607.23633v1",
+                "title": "A Controlled Visual-Backbone Benchmark for Multimodal Short-Term Solar Irradiance Forecasting",
+                "summary": "Sky-image irradiance studies often compare forecasting systems in which the image encoder, temporal model, fusion block, target definition, and training recipe all change together. We use a narrower protocol: the multimodal forecasting pipeline is fixed, and only the visual backbone is varied. The shared setup keeps preprocessing, clear-sky-index normalization, weather-history encoding, fusion, regression head, loss, optimizer schedule, seed, and chronological split policy unchanged. We compare ConvNeXt, Swin Transformer, VMamba, Spatial Mamba, and MambaVision backbones for 10min-ahead forecasting on Folsom and a strict matched NREL split. Forecast skill is measured against clear-sky-index smart persistence, and temporal-only rows are reported as weather-history diagnostics rather than as the main ranking criterion. On the Folsom strict split, all evaluated visual-backbone runs improve over smart persistence. In the evaluated single-seed strict runs, VMamba Small and Swin Base reach matched Folsom RMSE values of 65.39 W/m^2 and 65.50 W/m^2; the temporal-only diagnostic reaches 69.51 W/m^2. On the 313-sample NREL strict split, smart persistence remains strongest at 17.48 W/m^2, while the lowest visual RMSE is obtained by Swin Tiny at 23.76 W/m^2. These results provide a reproducible encoder comparison under one fixed multimodal operating point rather than establishing architecture-level dominance, statistically resolved ranking, or fully optimized forecasting performance. Code available here: https://github.com/Oshadha345/irradiance_benchmark",
+                "authors": [
+                  "Oshadha Samarakoon",
+                  "Dushan Herath",
+                  "Ishara Ranmandala",
+                  "Dilshara Herath",
+                  "Roshan Godaliyadda",
+                  "Parakrama Ekanayake",
+                  "Vijitha Herath"
+                ],
+                "published": "2026-07-26T12:38:06Z",
+                "updated": "2026-07-26T12:38:06Z",
+                "url": "http://arxiv.org/abs/2607.23633v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.23633v1",
+                "source": "arxiv.org",
+                "primary_category": "eess.IV",
+                "categories": [
+                  "eess.IV",
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2607.23464v1",
+                "title": "Direction-adaptive Mamba: Spatial-Frequency Dual-Domain Collaborative Learning for PolSAR Image Classification",
+                "summary": "Deep learning dominates polarimetric synthetic aperture radar (PolSAR) image classification, with Mamba architectures serving as favorable backbones due to linear complexity and strong global modeling capacity. However, existing PolSAR Mamba methods have two critical flaws: pure spatial processing discards fine-grained edges and textures, and fixed scanning patterns fail to model direction-variant anisotropic scattering and weak boundaries essential for PolSAR physical analysis. This work proposes DA-Mamba, a direction-adaptive Mamba framework with dual-domain collaborative learning for PolSAR classification. Equipped with an edge-aligned direction-adaptive scanning scheme, DA-Mamba captures long-range spatial dependencies and accurate boundary details. It adopts the Non-Subsampled Contourlet Transform (NSCT) to separate PolSAR data into low-frequency global components and multi-directional high-frequency subbands, extracting anisotropic structural features from high-frequency information while preserving global context via low-frequency branches. A dual-domain collaborative learning module further integrates spatial scattering and frequency-domain representations to strengthen feature discriminability. Evaluated on three real-world PolSAR datasets, DA-Mamba surpasses state-of-the-art methods, verifying the efficacy of the proposed adaptive scanning and dual-domain fusion designs. Code will be publicly available.",
+                "authors": [
+                  "Junfei Shi",
+                  "Yu Cheng",
+                  "Haojia Zhang",
+                  "Wenqiang Hua",
+                  "Junhuai Li",
+                  "Maoguo Gong"
+                ],
+                "published": "2026-07-26T05:17:07Z",
+                "updated": "2026-07-26T05:17:07Z",
+                "url": "http://arxiv.org/abs/2607.23464v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.23464v1",
+                "source": "arxiv.org",
+                "primary_category": "eess.IV",
+                "categories": [
+                  "eess.IV",
+                  "cs.CV"
+                ]
+              },
+              {
+                "arxiv_id": "2607.23451v1",
+                "title": "Multi-Modal Object Re-Identification with Prompt-S6 and Semantic-Aware Knowledge Guidance",
+                "summary": "Multi-modal object Re-Identification (ReID) aims to retrieve specific objects by integrating complementary information from multiple modalities. However, existing multi-modal ReID methods do not effectively address background interference suppression or achieve tri-modal alignment, instead focusing on pairwise feature fusion. Moreover, many current aggregation approaches suffer from high computational complexity. To address these limitations, we propose PRISM, a novel multi-modal ReID framework built upon Prompt-S6 (PS6) and semantic-aware knowledge guidance. PS6 maintains the linear complexity and strong sequence modeling capability of Mamba while enabling efficient cross-modal interaction. Leveraging these advantages, we design two key components: Semantic-Driven Token Pruning (SDTP) and Progressive Fusion Network (PFN). Parsing semantic priors from the segmentation foundation models, the SDTP then leverages these priors and applies dynamic token pruning to suppress background noise and refine feature representations. The PFN progressively aggregates multi-modal features to achieve tri-modal alignment and fully exploit modality complementarity. With the proposed modules, PRISM generates more robust multi-modal representations under complex scenarios. Extensive experiments on four multi-modal object ReID benchmarks demonstrate the effectiveness and efficiency of our approach. The source code is available at https://github.com/zw-absin/PRISM.",
+                "authors": [
+                  "Weixiang Zhou",
+                  "Jiabei Zuo",
+                  "Yuhao Wang",
+                  "Cong Wang",
+                  "Huchuan Lu",
+                  "Zhixun Su"
+                ],
+                "published": "2026-07-26T04:29:48Z",
+                "updated": "2026-07-26T04:29:48Z",
+                "url": "http://arxiv.org/abs/2607.23451v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.23451v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CV",
+                "categories": [
+                  "cs.CV"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T17:16:12"
+    }
+  ],
+  "updated_at": "2026-07-29T17:16:12"
+}

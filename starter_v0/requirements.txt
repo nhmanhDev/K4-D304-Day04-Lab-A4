@@ -5,11 +5,8 @@ google-genai>=0.8.0
 # Research tools:
 requests>=2.31.0
 PyYAML>=6.0
-# UI (React frontend served by FastAPI):
-fastapi>=0.110.0
-uvicorn>=0.27.0
-# Optional arXiv PDF extraction (`paper_text`):
-pypdf>=4.0.0
-# UI backend:
+# UI backend (React frontend served by FastAPI):
 fastapi>=0.110.0
 uvicorn>=0.29.0
+# Optional arXiv PDF extraction (`paper_text`):
+pypdf>=4.0.0
