@@ -131,11 +131,16 @@ function ToolEventRow({ event }: { event: ToolEvent }) {
 
 function RoundBlock({ round }: { round: RoundRecord }) {
   const hasTools = round.tool_results.length > 0
+  // A round with no tool calls is the final answer — its assistant_text is
+  // the same text already shown in full in the chat bubble on the left, so
+  // repeating it here (as a small italic paragraph) is just noisy duplication.
+  const noteText = hasTools ? round.assistant_text : null
   return (
     <div className="round-block">
       <div className={`round-header ${hasTools ? 'has-tools' : ''}`}>
         <span className="round-title">Round {round.round}</span>
-        {round.assistant_text && <p className="round-text">{round.assistant_text}</p>}
+        {noteText && <p className="round-text">{noteText}</p>}
+        {!hasTools && round.assistant_text && <p className="round-text">Final answer — xem trong khung chat.</p>}
       </div>
       {hasTools && (
         <ul className="tool-event-list">
@@ -174,15 +179,34 @@ function Composer({
   )
 }
 
+const STORAGE_KEY = 'research-agent-ui-session'
+
+interface StoredSession {
+  version: string
+  sessionId: string | null
+  messages: ChatMessage[]
+  selectedId: string | null
+}
+
+function loadStoredSession(): StoredSession | null {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY)
+    return raw ? (JSON.parse(raw) as StoredSession) : null
+  } catch {
+    return null
+  }
+}
+
 export default function App() {
   const [theme, toggleTheme] = useTheme()
-  const [version, setVersion] = useState('v0')
+  const stored = useMemo(loadStoredSession, [])
+  const [version, setVersion] = useState(stored?.version ?? 'v3')
   const [provider] = useState('openrouter')
-  const [sessionId, setSessionId] = useState<string | null>(null)
-  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [sessionId, setSessionId] = useState<string | null>(stored?.sessionId ?? null)
+  const [messages, setMessages] = useState<ChatMessage[]>(stored?.messages ?? [])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(stored?.selectedId ?? null)
   const [tools, setTools] = useState<ToolInfo[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
@@ -191,6 +215,12 @@ export default function App() {
       .then(setTools)
       .catch(() => setTools([]))
   }, [])
+
+  // Persist the conversation so a page reload / re-open doesn't lose it.
+  useEffect(() => {
+    const snapshot: StoredSession = { version, sessionId, messages, selectedId }
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot))
+  }, [version, sessionId, messages, selectedId])
 
   const selected = useMemo(
     () => messages.find((m) => m.id === selectedId && m.role === 'assistant'),

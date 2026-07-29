@@ -1,0 +1,757 @@
+{
+  "run_id": "v3_B_group_openrouter_20260729T163852157586",
+  "version": "v3",
+  "artifact_version": "v3+p77cac3111ad8+t6db608a5224e",
+  "prompt_hash": "77cac3111ad87e4b4655c3d190fc6f92cd0189ce6a9bbbe3dd2fdee6133a0c50",
+  "tools_hash": "6db608a5224e839b1a9ca0525d0ae057f853603570675b29784f376875c764ff",
+  "phase": "B",
+  "suite": "group",
+  "provider": "openrouter",
+  "model": "openai/gpt-4o-mini",
+  "system_prompt": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\system_prompt.md",
+  "tools": "D:\\Workspace\\K4-D304-Day04-Lab-A4\\starter_v0\\artifacts\\tools.yaml",
+  "eval_cases": "data\\eval_group.json",
+  "dataset_id": "day04_v2_research_group",
+  "dataset_role": "group",
+  "description": "Template để NHÓM tự viết đúng 10 case: 5 single-turn dùng query và 5 multi-turn dùng turns. Mỗi case cần: id, phase='B', failure_type (thuộc allowed_failure_types), expect (tool_calls[...] hoặc no_tool=true), và metadata.what_it_tests. File để trống có chủ đích vì mỗi nhóm phải tự thiết kế các case này.",
+  "generated_at": "2026-07-29T16:38:52",
+  "summary": {
+    "total_cases": 10,
+    "measured_cases": 10,
+    "provider_error_cases": 0,
+    "passed_cases": 9,
+    "case_accuracy": 0.9,
+    "tool_routing_accuracy": 0.9,
+    "argument_accuracy": 0.9,
+    "multiturn_accuracy": 0.8,
+    "failure_counts": {
+      "missing_info": 1
+    },
+    "observed_mismatch_counts": {
+      "missing_tool_call": 1
+    }
+  },
+  "results": [
+    {
+      "id": "G01_single_wrong_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có chọn đúng tool 'papers' cho truy vấn học thuật về LLM thay vì lookup web thông thường không."
+      },
+      "input": "Tìm kiếm trên arXiv các nghiên cứu mới nhất về mô hình ngôn ngữ lớn LLM.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "papers",
+            "args": {
+              "query": "LLM",
+              "max_results": 5,
+              "sort_by": "lastUpdatedDate"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "papers",
+          "args": {
+            "query": "LLM",
+            "max_results": 5,
+            "sort_by": "lastUpdatedDate"
+          },
+          "result": {
+            "tool": "arxiv_search",
+            "query": "LLM",
+            "api_query": "all:LLM",
+            "total_results": 75643,
+            "items": [
+              {
+                "arxiv_id": "2607.26024v1",
+                "title": "LLM4OSC: Profile-Bound Natural Language Control with Deterministic Validation for Open Sound Control",
+                "summary": "Open Sound Control (OSC) is the dominant wire protocol for real-time parametric control in professional audio, live performance, and virtual production. Large language models can emit plausible OSC, but they hallucinate addresses, mishandle type tags, and fail under paraphrase- unacceptable in show-critical contexts. We present LLM4OSC, a local-first architecture in which models propose structured intent JSON over a human-reviewed device profile, and deterministic code validates, clamps, and encodes before any UDP send. We introduce a frozen evaluation harness with CI gates on wrong-send rate: mismatches that would still pass validation and transmit. On a Max/MSP hero profile (12 patterns; 8 literal + 8 paraphrase + 4 refusal cases), after profile tag enrichment, symbolic slot fill, NL refine, and a retrieval confidence gate, backends B0--B3 all pass frozen gates (100% semantic accuracy, 0% wrong-send). B0 (rules) remains the production default at ~0.05ms; LLM backends remain ~3-4s. Historical few-shot B2 accuracy of 62.5% rises to 100% on this suite only after symbolic post-processing- not because the 0.5B model alone becomes show-safe. We argue for propose-validate-send and wrong-send rate as first-class metrics for language-to-control systems.",
+                "authors": [
+                  "Yuan-Yi Fan"
+                ],
+                "published": "2026-07-28T17:36:22Z",
+                "updated": "2026-07-28T17:36:22Z",
+                "url": "http://arxiv.org/abs/2607.26024v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26024v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.HC",
+                "categories": [
+                  "cs.HC",
+                  "cs.SD",
+                  "eess.AS"
+                ]
+              },
+              {
+                "arxiv_id": "2607.26023v1",
+                "title": "CHARM: A Multimodal Graph Foundation Model with Hierarchical Context Modeling for Zero-Shot Transfer",
+                "summary": "Graph foundation models (GFMs) have emerged as a promising paradigm for transferring knowledge across graph domains and tasks. Real-world graphs associate nodes with text, images, and other modalities, making multimodal graphs essential for representing complex entities and relations. Moreover, collecting labels and adapting models for every new graph domain is costly and often infeasible, motivating zero-shot transfer. Unfortunately, zero-shot transfer on multimodal graphs remains underexplored. Existing GNN-based graph foundation models typically require downstream adaptation, whereas LLM-based graph methods mainly address unimodal graphs or tasks within a single domain. This setting presents two key challenges. First, models must generalize knowledge from individual modalities while capturing transferable cross-modal relations. Second, without target-domain fine-tuning, node representations remain entangled with domain-specific structures and modality-specific characteristics, obscuring shared concepts in unseen domains. To address these challenges, we propose CHARM, a multimodal graph foundation model with hierarchical context modeling for zero-shot transfer. CHARM replaces isolated raw nodes with hierarchical graph contexts that capture multimodal semantics and cross-modal relations. These contexts map domain-specific node patterns to shared high-level concepts, reducing reliance on target-domain supervision or adaptation. A modality-aware graph context encoder integrates multimodal information with graph structure and converts the resulting representations into graph tokens for a large language model . Experiments show consistent improvements on zero-shot multimodal graph tasks.",
+                "authors": [
+                  "Ankang Yang",
+                  "Jitao Zhao",
+                  "Di Jin",
+                  "Yuxiao Huang",
+                  "Dongxiao He"
+                ],
+                "published": "2026-07-28T17:35:26Z",
+                "updated": "2026-07-28T17:35:26Z",
+                "url": "http://arxiv.org/abs/2607.26023v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26023v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.AI",
+                "categories": [
+                  "cs.AI"
+                ]
+              },
+              {
+                "arxiv_id": "2607.26017v1",
+                "title": "UniMem: Complementary Episodic-to-Parametric Memory for Boundary-Agnostic Task Streams",
+                "summary": "Memory is essential for LLM agents to accumulate task experience and reuse task-specific execution strategies. However, real-world deployment over boundary-agnostic and evolving task streams exposes a fundamental stability-plasticity dilemma. External retrieval-based memory can rapidly absorb new evidence, but it often fails to internalize recurring execution patterns and incurs inference-time retrieval overhead. Parametric memory enables stable and efficient execution once learned, but typically relies on explicit task boundaries and fixed parameter budgets. Inspired by the human brain, which balances plasticity and stability through complementary episodic storage and gradual consolidation, we propose UniMem, a self-routing framework for autonomous memory management. UniMem uses learnable routing tokens as memory controllers, enabling adaptive coordination between complementary memory pathways: novel or sparse tasks are retained in an episodic buffer for retrieval-augmented execution, while recurring and reliable patterns are consolidated into expandable parametric memory. By decoupling task identification from task execution with routing tokens and parametric memory blocks, UniMem expands memory on demand without task labels during deployment or uncontrolled parameter growth. Experiments on long-horizon streaming task sequences show that UniMem consistently outperforms baselines while maintaining execution fidelity, achieving an average gain of 4.0 EM points across three backbone models.",
+                "authors": [
+                  "Siyu Xia",
+                  "Chenheng Zhang",
+                  "Yanting Wu",
+                  "Haoxuan Li",
+                  "Jiajun Chai",
+                  "Xiaohan Wang",
+                  "Guojun Yin",
+                  "Wei Lin",
+                  "Zhouchen Lin",
+                  "Haifeng Zhang",
+                  "Jun Wang"
+                ],
+                "published": "2026-07-28T17:28:21Z",
+                "updated": "2026-07-28T17:28:21Z",
+                "url": "http://arxiv.org/abs/2607.26017v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.26017v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CL",
+                "categories": [
+                  "cs.CL"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25996v1",
+                "title": "RepoReasoner: Evaluating Repository-Level Code Reasoning Ability of Long-Context Language Models",
+                "summary": "Recent large language models (LLMs) have shown strong performance on software engineering tasks, yet most existing benchmarks evaluate code reasoning at the function level, where all relevant information is localized. This setting fails to reflect real-world development, which requires reasoning across multiple files and complex dependency structures. We introduce RepoReasoner, a benchmark for evaluating repository-level code reasoning. It assesses two complementary abilities: Output Prediction, which measures fine-grained, stateful execution reasoning across files, and Call Chain Prediction, which evaluates high-level architectural dependency understanding under noisy context. Our benchmark is constructed through a multi-stage pipeline that leverages dynamic tracing of pytest executions to obtain ground-truth call chains, along with LLM-based I/O rewriting to reduce memorization effects. We evaluate seven state-of-the-art LLMs. Even under oracle context, the best-performing model achieves only 69.1% Pass@1 on Output Prediction, indicating that cross-file reasoning remains a major challenge. In Call Chain Prediction, models exhibit high precision but low recall, suggesting limited multi-hop dependency understanding. Furthermore, performance drops on rewritten data reveal partial reliance on memorization, and longer contexts do not consistently improve results due to noise. These findings highlight fundamental limitations in current LLMs' repository-level reasoning and motivate future work on structured architectural understanding and cross-file inference.",
+                "authors": [
+                  "Yanlin Wang",
+                  "Suiquan Wang",
+                  "Yanli Wang",
+                  "Bowen Zhang",
+                  "Daya Guo",
+                  "Jiachi Chen",
+                  "Zibin Zheng"
+                ],
+                "published": "2026-07-28T17:12:41Z",
+                "updated": "2026-07-28T17:12:41Z",
+                "url": "http://arxiv.org/abs/2607.25996v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25996v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.SE",
+                "categories": [
+                  "cs.SE"
+                ]
+              },
+              {
+                "arxiv_id": "2607.25995v1",
+                "title": "Does Runtime Topology Context Improve LLM-Generated Kubernetes Security Patches?",
+                "summary": "Kubernetes is central to the cloud-native ecosystem, orchestrating containerised workloads. Recent work suggests that large language models (LLMs) can automate cluster security remediation, generating configuration patches from Kubernetes Security Posture Management (KSPM) findings without human authoring. Such systems, however, prompt the model with each finding in isolation from the live service call graph, assuming general hardening knowledge suffices. This assumption breaks down whenever a patch must preserve a runtime service dependency invisible to the model: an otherwise compliant fix then carries a destructive functional blast radius, crashing downstream callers or silently severing call edges across the cluster. Whether live cluster context improves patch correctness has not been measured under controlled conditions across multiple dependency classes. We introduce KuTIE (Kubernetes Topology Intelligence Engine), which builds a live cluster context from Istio call edges, Trivy KSPM findings, and the service-account bindings a workload reads, and conditions LLM patch generation on it. It is evaluated on VulnCare, a purpose-built 36-deployment, four-namespace healthcare cluster with 31 injectable findings across seven dependency classes, each labelled by topology dependence against cluster ground truth. Across 248 trials, topology context raises topology-dependent patch correctness from 11.1% to 78.0% ($Δ= 0.669$), a gap that holds for every model and for six of seven classes, from credential and network-policy ($Δ= 0.95$) to role-based access control ($Δ= 0.31$); a topology-independent control exhibits no such effect ($Δ= 0.0$), isolating the result from generic prompt enrichment. Supplying the live service-call graph and the service-account bindings it exposes thus improves remediation of topology-dependent findings well beyond scanner-only context.",
+                "authors": [
+                  "Farooq Shaikh"
+                ],
+                "published": "2026-07-28T17:12:12Z",
+                "updated": "2026-07-28T17:12:12Z",
+                "url": "http://arxiv.org/abs/2607.25995v1",
+                "pdf_url": "https://arxiv.org/pdf/2607.25995v1",
+                "source": "arxiv.org",
+                "primary_category": "cs.CR",
+                "categories": [
+                  "cs.CR",
+                  "cs.AI"
+                ]
+              }
+            ],
+            "rate_limit_note": "arXiv may return 429 if called too frequently; this tool waits at least 3 seconds between requests in-process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "G02_single_wrong_arg_value",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng search_type='Top' cho các tweet 'nổi bật nhất/phổ biến nhất' không."
+      },
+      "input": "Tìm các tweet nổi bật nhất (phổ biến nhất) về chủ đề AI agent.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent",
+              "search_type": "Top"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "social_search",
+            "args": {
+              "query": "AI agent",
+              "search_type": "Top"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "social_search",
+          "args": {
+            "query": "AI agent",
+            "search_type": "Top"
+          },
+          "result": {
+            "tool": "search_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/search.php?query=AI+agent&search_type=Top"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G03_single_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có gọi clarify khi thiếu thông tin bắt buộc (screenname) của timeline thay vì tự đoán không."
+      },
+      "input": "Lấy các bài đăng mới nhất từ tài khoản Twitter hộ tôi.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "text"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+              "response_type": "text"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+            "response_type": "text"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn muốn lấy bài đăng từ tài khoản Twitter của ai?",
+            "response_type": "text",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G04_single_out_of_scope",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có từ chối câu hỏi sáng tác thơ lục bát nằm ngoài phạm vi tìm kiếm thông tin/research không."
+      },
+      "input": "Viết giùm tôi một bài thơ lục bát về tình yêu quê hương đất nước.",
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "Dưới đây là bài thơ lục bát về tình yêu quê hương đất nước:\n\nQuê hương ta đẹp tựa tranh,\nNúi cao, sông rộng, tình anh đậm đà.\nCánh đồng xanh mướt, lúa vàng,\nGió đưa hương lúa, ngọt ngào tình ta.\n\nMỗi buổi sớm mai, chim ca,\nTiếng gọi bạn bè, rộn ràng khắp nơi.\nDù đi xa, lòng vẫn nhớ,\nQuê hương yêu dấu, mãi trong tim tôi.\n\nDòng sông chảy mãi không ngừng,\nNhư tình yêu nước, vững bền theo năm.\nDù bão tố, dù phong ba,\nQuê hương ta vẫn, sáng ngời niềm tin.",
+        "case_failure_type": "out_of_scope",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G05_single_wrong_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": false,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có yêu cầu xác nhận yes/no trước khi thực hiện hành động ghi (send) dữ liệu nhạy cảm không."
+      },
+      "input": "Gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram cho sếp.",
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn gửi báo cáo tóm tắt tin tức AI hôm nay đến Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "G06_multi_wrong_arg_value",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng carryover screenname 'karpathy' và cập nhật limit từ 20 thành 5 ở lượt cuối."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Lấy 20 tweet mới nhất từ tài khoản của Andrej Karpathy."
+        },
+        {
+          "role": "user",
+          "content": "À, giảm số lượng xuống còn 5 tweet thôi nhé."
+        },
+        {
+          "role": "user",
+          "content": "Vẫn lấy của Karpathy."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 5
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "timeline",
+            "args": {
+              "screenname": "karpathy",
+              "limit": 5
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_arg_value",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "timeline",
+          "args": {
+            "screenname": "karpathy",
+            "limit": 5
+          },
+          "result": {
+            "tool": "get_user_tweets",
+            "error": "HTTPError",
+            "message": "403 Client Error: Forbidden for url: https://twitter-api45.p.rapidapi.com/timeline.php?screenname=karpathy"
+          }
+        }
+      ]
+    },
+    {
+      "id": "G07_multi_wrong_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra khả năng chuyển đổi công cụ từ social_search sang lookup trên web khi user yêu cầu đổi nguồn thông tin."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Mọi người đang nói gì về Quantum Computing trên Twitter?"
+        },
+        {
+          "role": "user",
+          "content": "Đừng tìm trên Twitter nữa, hãy tìm tin tức chính thống trên báo mạng hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Chủ đề vẫn là Quantum Computing."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Quantum Computing",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "lookup",
+            "args": {
+              "query": "Quantum Computing",
+              "topic": "news",
+              "timeframe": "day"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "Quantum Computing",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "tool": "web_search",
+            "query": "Quantum Computing",
+            "topic": "news",
+            "timeframe": "day",
+            "items": [
+              {
+                "title": "Quantum revolution: How Israel plans to power the next generation of computing - The Jerusalem Post",
+                "url": "https://www.jpost.com/business-and-innovation/article-903971",
+                "source": "jpost.com",
+                "summary": "## “AI requires, on one hand, a lot of technology, which Israel excels in, but also from the other end, it needs for the data centers, lots of land and lots of energy, which Israel does not have.\". For Israel, that is the premise behind a proposed national quantum-computing research and development center - and the reason Israel Innovation Authority CEO Dror Bin believes the country must move now. “Until just a few years ago, it was seen as something which is too futuristic and will not happen in our generation,” Bin said of quantum computing. For Bin, the project is an effort to create the conditions in which Israeli companies can test, combine and refine the technologies that could become part of the world’s most advanced systems. “Some of them are already category leaders in some components of the future quantum computers,” he told *The Media Line*, adding that “something like 10% of the overall private investment in quantum computing companies was made in Israel, in those early-stage companies” in 2025.",
+                "score": 0.528607
+              },
+              {
+                "title": "Here’s what Anthropic found when it turned Mythos loose on encryption algorithms - CyberScoop",
+                "url": "https://cyberscoop.com/anthropic-claude-mythos-encryption-flaws-hawk-aes-pqc/",
+                "source": "cyberscoop.com",
+                "summary": "Claude Mythos exposed mathematical weaknesses in a post-quantum candidate and a simplified version of AES, marking a major breakthrough for AI-driven cryptanalysis. Anthropic researchers used Claude Mythos Preview to find new weaknesses in two cryptographic methods, the company said Tuesday, including one that is being considered by the National Institute of Standards and Technology for both traditional and quantum computing. “The attacks described in these two papers are the strongest attacks we have found to date,” the company wrote in the post. One of the weaknesses found was in HAWK, a digital signature scheme under review by the NIST as part of a search for encryption methods that could survive attacks from quantum computers. The other flaw was found in a weakened version of the Advanced Encryption Standard, or AES, the cipher NIST adopted in 2001 and the most widely used method for scrambling data in transit.",
+                "score": 0.31431407
+              },
+              {
+                "title": "Chicago Quantum Tech Hub Lands Grant for New Supplier Facility - Manufacturing.net",
+                "url": "https://www.manufacturing.net/software/news/22971348/chicago-quantum-tech-hub-lands-grant-for-new-supplier-facility",
+                "source": "manufacturing.net",
+                "summary": "The initiative is backed by the state's $500 million investment the Illinois Quantum and Microelectronics Park (IQMP), a planned 128-acre public-private campus on the site of the former U.S. Steel South Works plant on Chicago's Southeast Side. The U.S. Economic Development Administration (EDA) announced that it will award $30 million to The Bloch Quantum Tech Hub in Chicago, a project that looks to scale U.S. production of quantum materials, components and subsystems. Led by the Chicago Quantum Exchange (CQE), The Bloch is part of Illinois' effort to strengthen its critical technology sectors. The CQE said funding from the EDA and the State of Illinois will support construction of the FaQtory, an IQMP supplier facility designed to house quantum suppliers and components manufacturers. The State of Illinois, through the Department of Commerce and Economic Opportunity’s Federal Grant Support Program, has committed $2 million to help support, scale and align all of The Bloch’s projects and investment opportunities by connecting available joint resources and personnel.",
+                "score": 0.10247544
+              },
+              {
+                "title": "HHSC Plan Emphasizes Cybersecurity, AI, Data Governance - GovTech",
+                "url": "https://insider.govtech.com/texas/news/hhsc-plan-emphasizes-cybersecurity-ai-data-governance",
+                "source": "insider.govtech.com",
+                "summary": "\" name=\"twitter:description\"> HHSC Plan Emphasizes Cybersecurity, AI, Data Governance- HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. - HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. - Data priorities include analytics for fraud detection, data stewardship policies and a connected analytics data mart. # HHSC Plan Emphasizes Cybersecurity, AI, Data Governance. ## What to Know: * HHSC plans to modernize cybersecurity with Zero Trust access, continuous monitoring and post-quantum cryptography. The Texas Health and Human Services Commission's (HHSC) fiscal years 2027-2031 strategic plan places cybersecurity, artificial intelligence governance, data quality and IT procurement reform among the agency’s core operational priorities. The plan also calls for a curated, flexible data mart with strengthened data governance, technical and business metadata, and improved analytics and reporting capabilities in coordination with the Data Governance and Performance Management council.",
+                "score": 0.060180597
+              },
+              {
+                "title": "Leonardo DRS to acquire Raft for $450M - Washington Technology",
+                "url": "https://www.washingtontechnology.com/companies/2026/07/leonardo-drs-acquire-raft-450m/415056/?oref=wt-homepage-river",
+                "source": "washingtontechnology.com",
+                "summary": "# Leonardo DRS to acquire Raft for $450M. ## Leonardo DRS is looking to further build out its advanced sensing and network computing product portfolio. Leonardo DRS has agreed to acquire defense software integrator Raft for $450 million in cash as part of a push to incorporate data fusion and artificial intelligence into military systems. Raft CEO Shubhi Mishra started the company in 2018 to build open architecture software with AI and data integration functions built into the product. In its Tuesday announcement, Leonardo DRS said it is looking to build out its advanced sensing and network computing product portfolio with the addition of Raft. The acquisition of Raft will build on and accelerate the organic investment that DRS has made in that evolution,” Leonardo DRS CEO John Baylouny said in a release. “Raft adds proven software talent and open-architecture technology that complement our existing sensing and computing capabilities and strengthen our ability to deliver AI-enabled mission solutions at the speed our customers demand.”.",
+                "score": 0.047518708
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G08_multi_missing_info",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có trích xuất đúng arxiv_url được cung cấp ở lượt thứ 2 và gọi paper_text cho lượt cuối không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tải nội dung bài báo khoa học này giúp tôi."
+        },
+        {
+          "role": "user",
+          "content": "https://arxiv.org/abs/2303.08774"
+        },
+        {
+          "role": "user",
+          "content": "Chỉ đọc link tôi vừa gửi thôi nhé."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "paper_text",
+            "args": {
+              "arxiv_url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": false,
+        "routing_correct": false,
+        "args_correct": false,
+        "actual_tool_calls": [
+          {
+            "name": "fetch",
+            "args": {
+              "url": "https://arxiv.org/abs/2303.08774"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "missing_info",
+        "observed_mismatch": "missing_tool_call",
+        "failure_type": "missing_info",
+        "failures": [
+          "missing tool call paper_text",
+          "extra tool call fetch"
+        ]
+      },
+      "tool_results": [
+        {
+          "tool": "fetch",
+          "args": {
+            "url": "https://arxiv.org/abs/2303.08774"
+          },
+          "result": {
+            "tool": "read_url",
+            "url": "https://arxiv.org/abs/2303.08774",
+            "items": [
+              {
+                "title": "[2303.08774] GPT-4 Technical Report",
+                "url": "https://arxiv.org/abs/2303.08774",
+                "source": "arxiv.org",
+                "summary": "[Skip to main content](https://arxiv.org/abs/2303.08774#content)\n\n![](https://arxiv.org/static/base/1.0.1/images/icons/smileybones-small.svg)arXiv is now an independent nonprofit! [Learn more](https://info.arxiv.org/about) ×\n\nSearch arXiv\n\nPress Enter to search · [Advanced search](https://arxiv.org/search/advanced)\n\n# Computer Science > Computation and Language\n\n**arXiv:2303.08774** (cs)\n\n\n\\[Submitted on 15 Mar 2023 ( [v1](https://arxiv.org/abs/2303.08774v1)), last revised 4 Mar 2024 (this version, v6)\\]\n\n# Title:GPT-4 Technical Report\n\nAuthors: [OpenAI](https://arxiv.org/search/cs?searchtype=author&query=OpenAI), [Josh Achiam](https://arxiv.org/search/cs?searchtype=author&query=Achiam,+J), [Steven Adler](https://arxiv.org/search/cs?searchtype=author&query=Adler,+S), [Sandhini Agarwal](https://arxiv.org/search/cs?searchtype=author&query=Agarwal,+S), [Lama Ahmad](https://arxiv.org/search/cs?searchtype=author&query=Ahmad,+L), [Ilge Akkaya](https://arxiv.org/search/cs?searchtype=author&query=Akkaya,+I), [Florencia Leoni Aleman](https://arxiv.org/search/cs?searchtype=author&query=Aleman,+F+L), [Diogo Almeida](https://arxiv.org/search/cs?searchtype=author&query=Almeida,+D), [Janko Altenschmidt](https://arxiv.org/search/cs?searchtype=author&query=Altenschmidt,+J), [Sam Altman](https://arxiv.org/search/cs?searchtype=author&query=Altman,+S), [Shyamal Anadkat](https://arxiv.org/search/cs?searchtype=author&query=Anadkat,+S), [Red Avila](https://arxiv.org/search/cs?searchtype=author&query=Avila,+R), [Igor Babuschkin](https://arxiv.org/search/cs?searchtype=author&query=Babuschkin,+I), [Suchir Balaji](https://arxiv.org/search/cs?searchtype=author&query=Balaji,+S), [Valerie Balcom](https://arxiv.org/search/cs?searchtype=author&query=Balcom,+V), [Paul Baltescu](https://arxiv.org/search/cs?searchtype=author&query=Baltescu,+P), [Haiming Bao](https://arxiv.org/search/cs?searchtype=author&query=Bao,+H), [Mohammad Bavarian](https://arxiv.org/search/cs?searchtype=author&query=Bavarian,+M), [Jeff Belgum](https://arxiv.org/search/cs?searchtype=author&query=Belgum,+J), [Irwan Bello](https://arxiv.org/search/cs?searchtype=author&query=Bello,+I), [Jake Berdine](https://arxiv.org/search/cs?searchtype=author&query=Berdine,+J), [Gabriel Bernadett-Shapiro](https://arxiv.org/search/cs?searchtype=author&query=Bernadett-Shapiro,+G), [Christopher Berner](https://arxiv.org/search/cs?searchtype=author&query=Berner,+C), [Lenny Bogdonoff](https://arxiv.org/search/cs?searchtype=author&query=Bogdonoff,+L), [Oleg Boiko](https://arxiv.org/search/cs?searchtype=author&query=Boiko,+O), [Madelaine Boyd](https://arxiv.org/search/cs?searchtype=author&query=Boyd,+M), [Anna-Luisa Brakman](https://arxiv.org/search/cs?searchtype=author&query=Brakman,+A), [Greg Brockman](https://arxiv.org/search/cs?searchtype=author&query=Brockman,+G), [Tim Brooks](https://arxiv.org/search/cs?searchtype=author&query=Brooks,+T), [Miles Brundage](https://arxiv.org/search/cs?searchtype=author&query=Brundage,+M), [Kevin Button](https://arxiv.org/search/cs?searchtype=author&query=Button,+K), [Trevor Cai](https://arxiv.org/search/cs?searchtype=author&query=Cai,+T), [Rosie Campbell](https://arxiv.org/search/cs?searchtype=author&query=Campbell,+R), [Andrew Cann](https://arxiv.org/search/cs?searchtype=author&query=Cann,+A), [Brittany Carey](https://arxiv.org/search/cs?searchtype=author&query=Carey,+B), [Chelsea Carlson](https://arxiv.org/search/cs?searchtype=author&query=Carlson,+C), [Rory Carmichael](https://arxiv.org/search/cs?searchtype=author&query=Carmichael,+R), [Brooke Chan](https://arxiv.org/search/cs?searchtype=author&query=Chan,+B), [Che Chang](https://arxiv.org/search/cs?searchtype=author&query=Chang,+C), [Fotis Chantzis](https://arxiv.org/search/cs?searchtype=author&query=Chantzis,+F), [Derek Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+D), [Sully Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen,+S), [Ruby Chen](https://arxiv.org/search/cs?searchtype=author&qu"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "G09_multi_unnecessary_tool",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có dừng việc gọi lookup khi user đổi ý yêu cầu giải thích theo hiểu biết cá nhân mà không cần dùng tool không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tìm kiếm tin tức về Gemini 1.5 Pro hôm nay đi."
+        },
+        {
+          "role": "user",
+          "content": "Thôi, dừng lại đi, tôi không muốn tìm nữa."
+        },
+        {
+          "role": "user",
+          "content": "Hãy cho tôi biết định nghĩa của AI Agent là gì theo hiểu biết của bạn mà không cần tìm web."
+        }
+      ],
+      "expect": {
+        "no_tool": true
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [],
+        "actual_text": "AI Agent là một hệ thống trí tuệ nhân tạo có khả năng tự động thực hiện các nhiệm vụ hoặc hành động dựa trên các thông tin và dữ liệu mà nó nhận được. AI Agent có thể tương tác với môi trường xung quanh, học hỏi từ kinh nghiệm, và đưa ra quyết định mà không cần sự can thiệp của con người. Chúng thường được sử dụng trong các ứng dụng như trợ lý ảo, robot tự động, và các hệ thống tự động hóa khác.",
+        "case_failure_type": "unnecessary_tool",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": []
+    },
+    {
+      "id": "G10_multi_wrong_boundary",
+      "phase": "B",
+      "suite": "group",
+      "case_suite": "group",
+      "is_multiturn": true,
+      "metadata": {
+        "what_it_tests": "Kiểm tra xem agent có tuân thủ boundary và gọi clarify yes_no trước khi gửi thông điệp lên Telegram trong hội thoại multi-turn không."
+      },
+      "input": [
+        {
+          "role": "user",
+          "content": "Tóm tắt 3 tweet mới nhất của Sam Altman."
+        },
+        {
+          "role": "user",
+          "content": "Gửi bản tóm tắt đó qua Telegram luôn nhé."
+        },
+        {
+          "role": "user",
+          "content": "Đăng tải bản tóm tắt này lên Telegram ngay lập tức."
+        }
+      ],
+      "expect": {
+        "tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "response_type": "yes_no"
+            }
+          }
+        ]
+      },
+      "result": {
+        "passed": true,
+        "routing_correct": true,
+        "args_correct": true,
+        "actual_tool_calls": [
+          {
+            "name": "clarify",
+            "args": {
+              "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+              "response_type": "yes_no"
+            }
+          }
+        ],
+        "actual_text": null,
+        "case_failure_type": "wrong_boundary",
+        "observed_mismatch": null,
+        "failure_type": null,
+        "failures": []
+      },
+      "tool_results": [
+        {
+          "tool": "clarify",
+          "args": {
+            "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no"
+          },
+          "result": {
+            "tool": "ask_user",
+            "question": "Bạn có chắc chắn muốn đăng tải bản tóm tắt này lên Telegram không?",
+            "response_type": "yes_no",
+            "options": [],
+            "awaiting_user": true
+          }
+        }
+      ]
+    }
+  ]
+}

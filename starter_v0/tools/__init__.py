@@ -20,6 +20,7 @@ from .lookup.tool import web_search
 from .wikipedia.tool import wikipedia_summary
 from .weather.tool import get_weather
 from .save_digest.tool import save_digest
+from .calculator.tool import calculate
 
 
 # NOTE (starter_v0): tool names here are intentionally vague. These keys are the
@@ -41,6 +42,7 @@ TOOL_FUNCTIONS = {
     "wikipedia": wikipedia_summary,
     "weather": get_weather,
     "save_digest": save_digest,
+    "calculator": calculate,
 }
 
 

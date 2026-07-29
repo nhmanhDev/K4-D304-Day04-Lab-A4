@@ -183,3 +183,14 @@ tools:
         filename: {type: string, default: "", description: "Tên file (không cần đuôi .md)"}
         confirmed: {type: boolean, default: false, description: "Cờ xác nhận"}
       required: [markdown]
+
+  - name: calculator
+    description: |
+      Tính toán biểu thức số học (+ - * / ** % dấu ngoặc). Không gọi API, không cần key.
+      Dùng khi user hỏi tính toán trực tiếp (phần trăm, tổng, quy đổi số học đơn giản).
+      KHÔNG dùng cho câu hỏi không phải toán học thuần túy.
+    parameters:
+      type: object
+      properties:
+        expression: {type: string, default: "", description: "Biểu thức cần tính, ví dụ '15% * 200' viết lại thành '0.15*200'"}
+      required: [expression]
