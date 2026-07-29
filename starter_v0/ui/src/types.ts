@@ -32,3 +32,14 @@ export type ChatMessage =
       toolEvents: ToolEvent[]
     }
   | { id: string; role: 'error'; content: string }
+
+export type ToolStatus = 'ok' | 'error' | 'pending'
+
+export function toolStatus(event: ToolEvent): ToolStatus {
+  const result = event.result as Record<string, unknown> | null | undefined
+  if (result && typeof result === 'object') {
+    if (result.awaiting_user) return 'pending'
+    if ('error' in result) return 'error'
+  }
+  return 'ok'
+}
