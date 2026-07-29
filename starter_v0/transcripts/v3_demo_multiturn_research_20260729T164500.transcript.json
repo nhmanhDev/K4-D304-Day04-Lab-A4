@@ -1,0 +1,124 @@
+{
+  "transcript_id": "v3_demo_multiturn_research_20260729T164500",
+  "version": "v3",
+  "artifact_version": "v3+p77cac3111ad8+t6db608a5224e",
+  "prompt_hash": "77cac3111ad87e4b4655c3d190fc6f92cd0189ce6a9bbbe3dd2fdee6133a0c50",
+  "tools_hash": "6db608a5224e839b1a9ca0525d0ae057f853603570675b29784f376875c764ff",
+  "provider": "openrouter",
+  "model": "google/gemini-2.5-flash",
+  "system_prompt": "artifacts/system_prompt.md",
+  "tools": "artifacts/tools.yaml",
+  "created_at": "2026-07-29T16:45:00",
+  "updated_at": "2026-07-29T16:46:00",
+  "turns": [
+    {
+      "turn_index": 1,
+      "started_at": "2026-07-29T16:45:00",
+      "user": "Tìm tin tức nổi bật nhất hôm nay về AI Agent.",
+      "status": "answered",
+      "assistant_text": "Dưới đây là các tin tức AI Agent nổi bật hôm nay...",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "",
+          "tool_calls": [
+            {
+              "name": "lookup",
+              "args": {
+                "query": "AI Agent",
+                "topic": "news",
+                "timeframe": "day"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "lookup",
+              "args": {
+                "query": "AI Agent",
+                "topic": "news",
+                "timeframe": "day"
+              },
+              "result": {
+                "items": [
+                  {
+                    "title": "Gemini updates",
+                    "url": "https://example.com/1",
+                    "summary": "New agentic capabilities"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "lookup",
+          "args": {
+            "query": "AI Agent",
+            "topic": "news",
+            "timeframe": "day"
+          },
+          "result": {
+            "status": "ok"
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T16:45:05"
+    },
+    {
+      "turn_index": 2,
+      "started_at": "2026-07-29T16:45:10",
+      "user": "Tóm tắt thành dạng bản tin ngắn theo mẫu tiếng Việt.",
+      "status": "answered",
+      "assistant_text": "Đã định dạng bản tin AI Agent thành công.",
+      "rounds": [
+        {
+          "round": 1,
+          "assistant_text": "",
+          "tool_calls": [
+            {
+              "name": "format",
+              "args": {
+                "items": [
+                  {
+                    "title": "Gemini updates",
+                    "url": "https://example.com/1",
+                    "summary": "New agentic capabilities"
+                  }
+                ],
+                "template": "daily_ai_vn",
+                "headline": "Bản tin AI Agent"
+              }
+            }
+          ],
+          "tool_results": [
+            {
+              "tool": "format",
+              "args": {
+                "items": [],
+                "template": "daily_ai_vn"
+              },
+              "result": {
+                "markdown": "# Bản tin AI Agent"
+              }
+            }
+          ]
+        }
+      ],
+      "tool_events": [
+        {
+          "tool": "format",
+          "args": {
+            "template": "daily_ai_vn"
+          },
+          "result": {
+            "status": "ok"
+          }
+        }
+      ],
+      "ended_at": "2026-07-29T16:45:15"
+    }
+  ]
+}
