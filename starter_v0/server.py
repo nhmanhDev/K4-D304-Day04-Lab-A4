@@ -74,6 +74,19 @@ def health() -> dict[str, str]:
     return {"status": "ok"}
 
 
+@app.get("/api/tools")
+def list_tools() -> list[dict[str, str]]:
+    tools_path = ARTIFACTS_DIR / "tools.yaml"
+    declarations = load_tool_declarations(tools_path)
+    return [
+        {
+            "name": item["name"],
+            "description": (item.get("description") or "").strip().splitlines()[0] if item.get("description") else "",
+        }
+        for item in declarations
+    ]
+
+
 @app.post("/api/chat", response_model=ChatResponse)
 def chat(req: ChatRequest) -> ChatResponse:
     system_prompt_path = ARTIFACTS_DIR / "system_prompt.md"

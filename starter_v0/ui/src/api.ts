@@ -1,5 +1,16 @@
 import type { ChatApiResponse, ChatMessage } from './types'
 
+export interface ToolInfo {
+  name: string
+  description: string
+}
+
+export async function fetchTools(): Promise<ToolInfo[]> {
+  const res = await fetch('/api/tools')
+  if (!res.ok) throw new Error(`Request failed: ${res.status}`)
+  return res.json()
+}
+
 export async function sendChat(params: {
   message: string
   version: string

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { sendChat } from './api'
+import { fetchTools, sendChat, type ToolInfo } from './api'
 import { toolStatus, type ChatMessage, type RoundRecord, type ToolEvent } from './types'
 import './App.css'
 
@@ -34,19 +34,6 @@ const QUICK_CHIPS = [
   'Digest tin AI tuần này',
 ]
 
-const AVAILABLE_TOOLS: { name: string; hint: string }[] = [
-  { name: 'lookup', hint: 'tìm tin tức/web' },
-  { name: 'fetch', hint: 'đọc 1 URL' },
-  { name: 'timeline', hint: 'tweet của 1 người' },
-  { name: 'social_search', hint: 'tìm tweet theo chủ đề' },
-  { name: 'wikipedia', hint: 'định nghĩa nhanh' },
-  { name: 'weather', hint: 'thời tiết' },
-  { name: 'papers', hint: 'tìm paper arXiv' },
-  { name: 'paper_text', hint: 'đọc PDF arXiv' },
-  { name: 'format', hint: 'trình bày digest' },
-  { name: 'save_digest', hint: 'lưu digest ra file' },
-  { name: 'send', hint: 'gửi Telegram' },
-]
 
 function PlusIcon() {
   return (
@@ -196,7 +183,14 @@ export default function App() {
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [tools, setTools] = useState<ToolInfo[]>([])
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    fetchTools()
+      .then(setTools)
+      .catch(() => setTools([]))
+  }, [])
 
   const selected = useMemo(
     () => messages.find((m) => m.id === selectedId && m.role === 'assistant'),
@@ -273,11 +267,11 @@ export default function App() {
         </div>
 
         <div className="sidebar-body">
-          <p className="sidebar-section-title">Tools ({AVAILABLE_TOOLS.length})</p>
-          {AVAILABLE_TOOLS.map((t) => (
+          <p className="sidebar-section-title">Tools ({tools.length})</p>
+          {tools.map((t) => (
             <div key={t.name} className="sidebar-tool-item">
               <code>{t.name}</code>
-              <span>{t.hint}</span>
+              <span>{t.description}</span>
             </div>
           ))}
         </div>
